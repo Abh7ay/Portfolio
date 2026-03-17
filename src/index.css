@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #5E6EF2;
+  /* The Portavia Accent Purple */
+  --color-dark-bg: #121212;
+  --color-dark-text: #F2F2F2;
+  --color-light-bg: #F2F2F2;
+  --color-light-text: #1A1A1A;
+
+  --font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-antonio: 'Antonio', impact, sans-serif;
+
+  --border-radius-xl: 32px;
+}
+
+@layer base {
+  :root {
+    --bg-color: #F2F2F2;
+    --text-color: #1A1A1A;
+    --card-bg: #FFFFFF;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --muted-text: #666666;
+  }
+
+  .dark {
+    --bg-color: #121212;
+    --text-color: #F2F2F2;
+    --card-bg: #1E1E1E;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --muted-text: #A0A0A0;
+    --glass-bg: rgba(0, 0, 0, 0.3);
+    --glass-border: rgba(255, 255, 255, 0.1);
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body {
+    background-image:
+      radial-gradient(circle at 15% 15%, rgba(94, 110, 242, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 85% 85%, rgba(94, 110, 242, 0.08) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+
+
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-antonio);
+    text-transform: uppercase;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+  }
+
+  .nav-pill {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+}
