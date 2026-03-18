@@ -2,62 +2,62 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
-const Navbar = ({ toggleTheme, isDark }) => {
+const Navbar = ({ toggleTheme, currentRoute }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'About', href: '#about' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Blogs', href: '#blogs' }
+    { name: 'Home', href: '#/' },
+    { name: 'Skills', href: '#/skills' },
+    { name: 'About', href: '#/about' },
+    { name: 'Projects', href: '#/projects' },
   ];
 
   return (
     <>
-      <motion.nav 
+      <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl"
+        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+        className="fixed top-6 left-1/2 z-50 w-[95%] max-w-4xl -translate-x-1/2"
       >
-        <div className="nav-pill rounded-full px-4 py-2 flex items-center justify-between">
-          
-          {/* Avatar */}
-          <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white pointer-events-auto shadow-sm">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Avatar" className="w-full h-full object-cover" />
+        <div className="nav-pill flex items-center justify-between rounded-full px-4 py-2">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-[var(--text-color)] text-sm font-semibold text-[var(--bg-color)] shadow-sm">
+              AM
             </div>
+            <div className="hidden text-sm font-medium md:block">Abhishek Mathur</div>
           </div>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden items-center gap-1 md:flex">
             {navLinks.map((link) => (
-              <a 
-                key={link.name} 
+              <a
+                key={link.name}
                 href={link.href}
-                className="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+                className={[
+                  'rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-black/5 dark:hover:bg-white/10',
+                  currentRoute === link.href.slice(1) ? 'bg-black/6 dark:bg-white/10' : '',
+                ].join(' ')}
               >
                 {link.name}
               </a>
             ))}
           </div>
 
-          {/* Right Actions */}
           <div className="flex items-center gap-2">
-            <button 
+            <button
               onClick={toggleTheme}
-              className="p-2 rounded-full border border-[var(--border-color)] hover:bg-black/5 dark:hover:bg-white/10 transition-colors hidden sm:flex"
+              className="hidden rounded-full border border-[var(--border-color)] p-2 transition-colors hover:bg-black/5 dark:hover:bg-white/10 sm:flex"
               aria-label="Toggle theme"
             >
-              <div className="w-5 h-5 rounded-full bg-[var(--color-primary)] opacity-80" />
+              <div className="h-5 w-5 rounded-full bg-[var(--color-primary)] opacity-80" />
             </button>
-            <a 
-              href="#contact"
-              className="hidden sm:block px-6 py-2.5 rounded-full bg-[var(--text-color)] text-[var(--bg-color)] text-sm font-medium transition-transform hover:scale-105"
+            <a
+              href="#/contact"
+              className="hidden rounded-full bg-[var(--text-color)] px-6 py-2.5 text-sm font-medium text-[var(--bg-color)] transition-transform hover:scale-105 sm:block"
             >
               Contact
             </a>
-            <button 
+            <button
               className="p-2 md:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -66,26 +66,28 @@ const Navbar = ({ toggleTheme, isDark }) => {
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute top-16 left-0 w-full glass rounded-2xl p-4 flex flex-col gap-2 md:hidden"
+            className="glass absolute top-16 left-0 flex w-full flex-col gap-2 rounded-2xl p-4 md:hidden"
           >
             {navLinks.map((link) => (
-              <a 
-                key={link.name} 
+              <a
+                key={link.name}
                 href={link.href}
-                className="px-4 py-3 rounded-xl text-sm font-medium transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+                className={[
+                  'rounded-xl px-4 py-3 text-sm font-medium transition-colors hover:bg-black/5 dark:hover:bg-white/10',
+                  currentRoute === link.href.slice(1) ? 'bg-black/6 dark:bg-white/10' : '',
+                ].join(' ')}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
               </a>
             ))}
-            <a 
-              href="#contact"
-              className="px-4 py-3 mt-2 rounded-xl bg-[var(--text-color)] text-[var(--bg-color)] text-sm font-medium text-center"
+            <a
+              href="#/contact"
+              className="mt-2 rounded-xl bg-[var(--text-color)] px-4 py-3 text-center text-sm font-medium text-[var(--bg-color)]"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Contact

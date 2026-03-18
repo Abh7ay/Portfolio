@@ -1,48 +1,62 @@
 import { motion } from 'framer-motion';
 
-const TechStackMarquee = () => {
-  // Using some standard tool/tech names as placeholders for icons
-  const techStack = [
-    "Figma", "Framer", "Webflow", "React", "Tailwind", "Next.js", 
-    "After Effects", "Illustrator", "Photoshop", "Spline", "Vite"
-  ];
+const stackItems = [
+  'Python',
+  'C++',
+  'Java',
+  'C',
+  'TensorFlow',
+  'PyTorch',
+  'Scikit-learn',
+  'Keras',
+  'React.js',
+  'Django',
+  'Tailwind CSS',
+  'PHP',
+  'Pandas',
+  'NumPy',
+  'Matplotlib',
+  'MySQL',
+  'SQLite',
+  'Git',
+  'GitHub',
+];
 
-  // Double the array to create the seamless infinite scroll effect
-  const marqueeItems = [...techStack, ...techStack];
+const TechStackMarquee = () => {
+  const marqueeItems = [...stackItems, ...stackItems];
 
   return (
-    <div className="w-full overflow-hidden py-12 mt-12 border-t border-[var(--border-color)] border-b cursor-none select-none flex flex-col items-center">
-      <h3 className="text-xl font-antonio mb-8 text-[var(--muted-text)] tracking-wider">MY TOOLBOX</h3>
-      
-      <div className="relative w-full max-w-[100vw] overflow-hidden flex">
-        
-        {/* Left/Right Fading Gradients mapping to theme */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[var(--bg-color)] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[var(--bg-color)] to-transparent z-10 pointer-events-none" />
+    <div className="mt-12 flex w-full select-none flex-col items-center overflow-hidden border-y border-[var(--border-color)] py-12 cursor-none">
+      <h3 className="mb-8 text-xl tracking-wider text-[var(--muted-text)]">
+        CORE STACK
+      </h3>
+
+      <div className="relative flex w-full max-w-[100vw] overflow-hidden">
+        <div className="pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-24 bg-gradient-to-r from-[var(--bg-color)] to-transparent" />
+        <div className="pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-24 bg-gradient-to-l from-[var(--bg-color)] to-transparent" />
 
         <motion.div
-          animate={{ x: [0, -1035] }} // Depends on item width, adjust if needed
+          animate={{ x: [0, -1620] }}
           transition={{
             x: {
               repeat: Infinity,
-              repeatType: "loop",
-              duration: 25,
-              ease: "linear",
+              repeatType: 'loop',
+              duration: 34,
+              ease: 'linear',
             },
           }}
-          className="flex whitespace-nowrap gap-12 items-center"
+          className="flex items-center gap-6 whitespace-nowrap"
         >
-          {marqueeItems.map((tech, index) => (
-            <div 
-              key={index} 
-              className="px-6 py-4 glass rounded-[2rem] flex items-center justify-center min-w-[160px] grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+          {marqueeItems.map((item, index) => (
+            <div
+              key={`${item}-${index}`}
+              className="glass flex min-w-[150px] items-center justify-center rounded-[2rem] px-6 py-4 opacity-75 transition-all duration-300 hover:opacity-100"
             >
-              <span className="font-bold text-lg tracking-wide">{tech}</span>
+              <span className="text-lg font-bold tracking-wide">{item}</span>
             </div>
           ))}
         </motion.div>
       </div>
-
     </div>
   );
 };

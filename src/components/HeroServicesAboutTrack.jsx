@@ -1,157 +1,458 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { cubicBezier, motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
+import { useLayoutEffect, useRef, useState } from 'react';
+import { motion, useMotionTemplate, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import HeroSection from './HeroSection';
 import ServicesSection from './ServicesSection';
 import AboutSection from './AboutSection';
-
-const EASE = cubicBezier(0.22, 1, 0.36, 1);
+import ProfileShowcaseCard from './ProfileShowcaseCard';
 
 // One traveling card that docks into Services, then About.
 export default function HeroServicesAboutTrack() {
-  const trackRef = useRef(null);
-  const [isDockedAtAbout, setIsDockedAtAbout] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const heroSectionRef = useRef(null);
+  const servicesSectionRef = useRef(null);
+  const aboutSectionRef = useRef(null);
   const servicesSlotRef = useRef(null);
   const aboutSlotRef = useRef(null);
-
-  const [servicesOffset, setServicesOffset] = useState({ x: 260, y: 80 });
-  const [aboutOffset, setAboutOffset] = useState({ x: -260, y: 120 });
-
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ['start start', 'end end'],
+  const [isMeasured, setIsMeasured] = useState(false);
+  const [layout, setLayout] = useState({
+    slots: {
+      services: { x: 0, y: 120 },
+      about: { x: 0, y: 120 },
+    },
+    stages: {
+      start: 0,
+      serviceMid: 220,
+      serviceDock: 420,
+      serviceSettle: 500,
+      serviceHoldEnd: 760,
+      aboutMid: 1120,
+      aboutDock: 1380,
+      aboutSettle: 1520,
+      fadeStart: 1350,
+      fadeEnd: 1410,
+    },
   });
 
-  const eased = useTransform(scrollYProgress, EASE);
-  // Extra slowdown: compress early progress so the card needs more scroll
-  const easedSlow = useTransform(eased, (v) => v * v);
-  const p = useSpring(easedSlow, { stiffness: 90, damping: 30, mass: 0.4 });
+  const { scrollY } = useScroll();
+  const smoothScrollY = useSpring(scrollY, prefersReducedMotion
+    ? { stiffness: 180, damping: 36, mass: 0.35 }
+    : { stiffness: 110, damping: 28, mass: 0.45 });
+  const rotationDriver = useSpring(scrollY, prefersReducedMotion
+    ? { stiffness: 180, damping: 36, mass: 0.35 }
+    : { stiffness: 96, damping: 24, mass: 0.54 });
+  const transformSpring = prefersReducedMotion
+    ? { stiffness: 240, damping: 34, mass: 0.3 }
+    : { stiffness: 170, damping: 24, mass: 0.42 };
 
-  // Measure slots and compute offsets so the card centers exactly in them.
-  useEffect(() => {
-    function measure() {
-      if (!servicesSlotRef.current || !aboutSlotRef.current) return;
-
-      const heroCenterX = window.innerWidth / 2;
-      const heroCenterY = window.innerHeight / 2;
-
-      const servicesRect = servicesSlotRef.current.getBoundingClientRect();
-      const servicesCenterX = servicesRect.left + servicesRect.width / 2;
-      const servicesCenterY = servicesRect.top + servicesRect.height / 2;
-
-      const aboutRect = aboutSlotRef.current.getBoundingClientRect();
-      const aboutCenterX = aboutRect.left + aboutRect.width / 2;
-      const aboutCenterY = aboutRect.top + aboutRect.height / 2;
-
-      setServicesOffset({
-        x: servicesCenterX - heroCenterX + 40,
-        y: servicesCenterY - heroCenterY,
-      });
-
-      setAboutOffset({
-        x: aboutCenterX - heroCenterX + 40,
-        y: aboutCenterY - heroCenterY,
-      });
+  useLayoutEffect(() => {
+    if (
+      !heroSectionRef.current ||
+      !servicesSectionRef.current ||
+      !aboutSectionRef.current ||
+      !servicesSlotRef.current ||
+      !aboutSlotRef.current
+    ) {
+      return;
     }
 
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
+    let frameId = 0;
+
+    function documentTop(node) {
+      return window.scrollY + node.getBoundingClientRect().top;
+    }
+
+    function readOffset(node) {
+      const rect = node.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2 - window.innerWidth / 2,
+        y: rect.top + rect.height / 2 - window.innerHeight / 2,
+      };
+    }
+
+    function measure() {
+      if (
+        !heroSectionRef.current ||
+        !servicesSectionRef.current ||
+        !aboutSectionRef.current ||
+        !servicesSlotRef.current ||
+        !aboutSlotRef.current
+      ) {
+        return;
+      }
+
+      const viewportHeight = window.innerHeight;
+      const heroTop = documentTop(heroSectionRef.current);
+      const servicesTop = documentTop(servicesSectionRef.current);
+      const aboutTop = documentTop(aboutSectionRef.current);
+
+      const start = heroTop + viewportHeight * 0.06;
+      const serviceDock = Math.max(start + 180, servicesTop - viewportHeight * 0.54);
+      const serviceMid = start + (serviceDock - start) * 0.68;
+      const aboutDockTarget = aboutTop - viewportHeight * 0.08;
+      const serviceHoldEnd = Math.max(
+        serviceDock + 120,
+        serviceDock + (aboutDockTarget - serviceDock) * 0.24,
+      );
+      const serviceSettle = Math.max(
+        serviceDock + 24,
+        Math.min(serviceDock + viewportHeight * 0.08, serviceHoldEnd - 24),
+      );
+      const aboutDock = Math.max(serviceHoldEnd + 180, aboutDockTarget);
+      const aboutMid = serviceHoldEnd + (aboutDock - serviceHoldEnd) * 0.68;
+      const aboutSettle = aboutDock + viewportHeight * 0.14;
+      const fadeStart = aboutMid + (aboutDock - aboutMid) * 0.74;
+      const fadeEnd = aboutDock + viewportHeight * 0.02;
+
+      const next = {
+        slots: {
+          services: readOffset(servicesSlotRef.current),
+          about: readOffset(aboutSlotRef.current),
+        },
+        stages: {
+          start,
+          serviceMid,
+          serviceDock,
+          serviceSettle,
+          serviceHoldEnd,
+          aboutMid,
+          aboutDock,
+          aboutSettle,
+          fadeStart,
+          fadeEnd,
+        },
+      };
+
+      setLayout((prev) => {
+        const unchanged =
+          Math.abs(prev.slots.services.x - next.slots.services.x) < 0.5 &&
+          Math.abs(prev.slots.services.y - next.slots.services.y) < 0.5 &&
+          Math.abs(prev.slots.about.x - next.slots.about.x) < 0.5 &&
+          Math.abs(prev.slots.about.y - next.slots.about.y) < 0.5 &&
+          Math.abs(prev.stages.start - next.stages.start) < 0.5 &&
+          Math.abs(prev.stages.serviceMid - next.stages.serviceMid) < 0.5 &&
+          Math.abs(prev.stages.serviceDock - next.stages.serviceDock) < 0.5 &&
+          Math.abs(prev.stages.serviceSettle - next.stages.serviceSettle) < 0.5 &&
+          Math.abs(prev.stages.serviceHoldEnd - next.stages.serviceHoldEnd) < 0.5 &&
+          Math.abs(prev.stages.aboutMid - next.stages.aboutMid) < 0.5 &&
+          Math.abs(prev.stages.aboutDock - next.stages.aboutDock) < 0.5 &&
+          Math.abs(prev.stages.aboutSettle - next.stages.aboutSettle) < 0.5 &&
+          Math.abs(prev.stages.fadeStart - next.stages.fadeStart) < 0.5 &&
+          Math.abs(prev.stages.fadeEnd - next.stages.fadeEnd) < 0.5;
+
+        return unchanged ? prev : next;
+      });
+
+      setIsMeasured(true);
+    }
+
+    function queueMeasure() {
+      cancelAnimationFrame(frameId);
+      frameId = requestAnimationFrame(measure);
+    }
+
+    const resizeObserver = new ResizeObserver(queueMeasure);
+    resizeObserver.observe(heroSectionRef.current);
+    resizeObserver.observe(servicesSectionRef.current);
+    resizeObserver.observe(aboutSectionRef.current);
+    resizeObserver.observe(servicesSlotRef.current);
+    resizeObserver.observe(aboutSlotRef.current);
+
+    queueMeasure();
+    window.addEventListener('resize', queueMeasure);
+    window.addEventListener('scroll', queueMeasure, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', queueMeasure);
+      window.removeEventListener('scroll', queueMeasure);
+    };
   }, []);
 
-  // Progress windows: hero -> services (with small scroll hold) -> about
-  // First big flip (around p ≈ 0.38) → card arrives in Services.
-  // Hold position between p ≈ 0.38 and 0.5 so extra scroll doesn't move the card.
-  // Second big flip (around p ≈ 0.72) → card arrives in About.
-  const cardX = useTransform(
-    p,
-    [0, 0.38, 0.5, 0.72, 1],
-    [0, servicesOffset.x, servicesOffset.x, aboutOffset.x, aboutOffset.x],
+  const serviceTravelX = layout.slots.services.x * 0.68;
+  const serviceTravelY = layout.slots.services.y * 0.72;
+  const firstFlipMid = prefersReducedMotion ? 0 : 172;
+  const firstFlipDock = prefersReducedMotion ? 0 : 332;
+  const firstFlipEnd = prefersReducedMotion ? 0 : 360;
+  const secondFlipMid = prefersReducedMotion ? 0 : 532;
+  const secondFlipDock = prefersReducedMotion ? 0 : 692;
+  const secondFlipEnd = prefersReducedMotion ? 0 : 720;
+  const aboutDeltaX = layout.slots.about.x - layout.slots.services.x;
+  const aboutDeltaY = layout.slots.about.y - layout.slots.services.y;
+  // Keep the second flip anchored near the Services slot so it doesn't drift right mid-rotation.
+  const aboutTravelX = layout.slots.services.x + (aboutDeltaX < 0 ? aboutDeltaX * 0.36 : 0);
+  const aboutTravelY = layout.slots.services.y + aboutDeltaY * 0.72;
+
+  const rawCardX = useTransform(
+    smoothScrollY,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    [
+      0,
+      serviceTravelX,
+      layout.slots.services.x,
+      layout.slots.services.x,
+      layout.slots.services.x,
+      aboutTravelX,
+      layout.slots.about.x,
+      layout.slots.about.x,
+    ],
   );
-  const cardY = useTransform(
-    p,
-    [0, 0.38, 0.5, 0.72, 1],
-    [0, servicesOffset.y, servicesOffset.y, aboutOffset.y, aboutOffset.y],
+  const rawCardY = useTransform(
+    smoothScrollY,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    [
+      0,
+      serviceTravelY,
+      layout.slots.services.y,
+      layout.slots.services.y,
+      layout.slots.services.y,
+      aboutTravelY,
+      layout.slots.about.y,
+      layout.slots.about.y,
+    ],
   );
 
-  // Dramatic flip right into Services, then flip again into About
-  const rotateY = useTransform(p, [0, 0.22, 0.38, 0.55, 0.72, 1], [0, -78, -18, 12, 26, 26]);
-  const rotateX = useTransform(p, [0, 0.38, 0.72, 1], [8, 2, 4, 4]);
-  const rotateZ = useTransform(p, [0, 0.38, 0.72, 1], [0, 6, -6, -6]);
-  const scale = useTransform(p, [0, 0.38, 0.72, 1], [1, 1.02, 1.02, 1.02]);
-
-  const blur = useTransform(p, [0, 0.22, 0.30, 0.38, 1], [0, 1.2, 0.6, 0, 0]);
-  const filter = useTransform(blur, (v) => `blur(${v}px)`);
-  const shadow = useTransform(p, [0, 0.38, 1], [0.28, 0.42, 0.34]);
+  const rawRotateY = useTransform(
+    rotationDriver,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    prefersReducedMotion
+      ? [0, 0, 0, 0, 0, 0, 0, 0]
+      : [0, firstFlipMid, firstFlipDock, firstFlipEnd, firstFlipEnd, secondFlipMid, secondFlipDock, secondFlipEnd],
+  );
+  const rawRotateX = useTransform(
+    rotationDriver,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    prefersReducedMotion ? [0, 0, 0, 0, 0, 0, 0, 0] : [8, 16, 10, 2, 1, 16, 10, 0],
+  );
+  const rawRotateZ = useTransform(
+    rotationDriver,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    prefersReducedMotion
+      ? [0, 0, 0, 0, 0, 0, 0, 0]
+      : [0, -8, -4, -1, 0, -8, -4, 0],
+  );
+  const rawScale = useTransform(
+    smoothScrollY,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    prefersReducedMotion
+      ? [1, 1, 1, 1, 1, 1, 1, 1]
+      : [0.96, 0.995, 1.018, 1.006, 1.004, 0.995, 1.018, 1],
+  );
+  const rawBlur = useTransform(
+    smoothScrollY,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    prefersReducedMotion
+      ? [0, 0, 0, 0, 0, 0, 0, 0]
+      : [0, 0.95, 0.18, 0, 0, 0.95, 0.18, 0],
+  );
+  const rawBrightness = useTransform(
+    smoothScrollY,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    prefersReducedMotion
+      ? [1, 1, 1, 1, 1, 1, 1, 1]
+      : [1, 1.03, 1.015, 1, 1, 1, 1, 1],
+  );
+  const rawSaturate = useTransform(
+    smoothScrollY,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    prefersReducedMotion
+      ? [1, 1, 1, 1, 1, 1, 1, 1]
+      : [1, 1.06, 1.02, 1, 1, 1, 1, 1],
+  );
+  const rawZ = useTransform(
+    smoothScrollY,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    prefersReducedMotion
+      ? [0, 0, 0, 0, 0, 0, 0, 0]
+      : [0, 64, 12, 0, 0, 64, 12, 0],
+  );
+  const rawShadow = useTransform(
+    smoothScrollY,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    [0.24, 0.46, 0.4, 0.34, 0.34, 0.46, 0.3, 0.16],
+  );
+  const rawOriginX = useTransform(
+    smoothScrollY,
+    [
+      layout.stages.start,
+      layout.stages.serviceMid,
+      layout.stages.serviceDock,
+      layout.stages.serviceSettle,
+      layout.stages.serviceHoldEnd,
+      layout.stages.aboutMid,
+      layout.stages.aboutDock,
+      layout.stages.aboutSettle,
+    ],
+    prefersReducedMotion
+      ? [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      : [0.74, 0.78, 0.74, 0.68, 0.62, 0.56, 0.52, 0.5],
+  );
+  const cardX = useSpring(rawCardX, transformSpring);
+  const cardY = useSpring(rawCardY, transformSpring);
+  const rotateY = rawRotateY;
+  const rotateX = rawRotateX;
+  const rotateZ = rawRotateZ;
+  const scale = useSpring(rawScale, transformSpring);
+  const blur = useSpring(rawBlur, transformSpring);
+  const brightness = useSpring(rawBrightness, transformSpring);
+  const saturate = useSpring(rawSaturate, transformSpring);
+  const z = useSpring(rawZ, transformSpring);
+  const shadow = useSpring(rawShadow, transformSpring);
+  const originX = useSpring(rawOriginX, transformSpring);
+  const filter = useMotionTemplate`blur(${blur}px) brightness(${brightness}) saturate(${saturate})`;
   const boxShadow = useTransform(shadow, (v) => `0 28px 90px rgba(0,0,0,${v})`);
-
-  const card = useMemo(
-    () => ({
-      title: 'Selected Work',
-      badge: 'Featured',
-      image:
-        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&q=80&auto=format&fit=crop',
-    }),
-    [],
+  const floatingOpacity = useTransform(
+    smoothScrollY,
+    [layout.stages.fadeStart, layout.stages.fadeEnd],
+    [1, 0],
   );
-
-  useMotionValueEvent(p, 'change', (latest) => {
-    // Dock once we reach the About segment; undock if user scrolls back up.
-    const next = latest >= 0.72;
-    setIsDockedAtAbout((prev) => (prev === next ? prev : next));
-  });
-
-  const CardMarkup = (
-    <div className="w-[420px] h-[520px] rounded-[20px] overflow-hidden bg-[var(--card-bg)] border border-black/5 dark:border-white/10 backface-hidden">
-      <div className="group relative h-full w-full">
-        <img
-          src={card.image}
-          alt={card.title}
-          className="h-full w-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-2.5"
-          loading="lazy"
-          draggable="false"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/12 to-transparent" />
-        <div className="absolute left-0 right-0 bottom-0 p-6 text-white">
-          <div className="mb-3 inline-flex items-center rounded-full bg-white/12 px-3 py-1 text-xs font-medium backdrop-blur">
-            {card.badge}
-          </div>
-          <div className="text-2xl tracking-tight">{card.title}</div>
-        </div>
-      </div>
-    </div>
+  const dockedOpacity = useTransform(
+    smoothScrollY,
+    [layout.stages.fadeStart, layout.stages.fadeEnd],
+    [0, 1],
+  );
+  const dockedCard = (
+    <motion.div
+      style={{ opacity: dockedOpacity }}
+      className="pointer-events-none absolute inset-0 flex items-center justify-center"
+    >
+      <ProfileShowcaseCard />
+    </motion.div>
   );
 
   return (
-    <div ref={trackRef} className="relative">
-      <HeroSection />
-      <ServicesSection slotRef={servicesSlotRef} />
-      <AboutSection slotRef={aboutSlotRef} dockedCard={isDockedAtAbout ? CardMarkup : null} />
+    <div className="relative">
+      <HeroSection sectionRef={heroSectionRef} />
+      <ServicesSection sectionRef={servicesSectionRef} slotRef={servicesSlotRef} />
+      <AboutSection sectionRef={aboutSectionRef} slotRef={aboutSlotRef} dockedCard={dockedCard} />
 
       <div
         className={[
-          'pointer-events-none fixed inset-0 z-30 flex items-center justify-center',
-          isDockedAtAbout ? 'opacity-0' : 'opacity-100',
+          'pointer-events-none fixed inset-0 z-30 flex items-center justify-center transition-opacity duration-300',
+          isMeasured ? 'opacity-100' : 'opacity-0',
         ].join(' ')}
       >
         <motion.div
-          className="pointer-events-auto"
+          className="pointer-events-none"
           style={{
+            opacity: floatingOpacity,
             x: cardX,
             y: cardY,
+            z,
             rotateY,
             rotateX,
             rotateZ,
             scale,
             filter,
             boxShadow,
+            originX,
+            originY: 0.5,
+            transformPerspective: 1800,
             transformStyle: 'preserve-3d',
-            perspective: 1400,
           }}
         >
-          {CardMarkup}
+          <ProfileShowcaseCard />
         </motion.div>
       </div>
     </div>
   );
 }
-

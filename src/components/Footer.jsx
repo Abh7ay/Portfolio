@@ -1,27 +1,30 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
-const Footer = ({ isDark }) => {
+const Footer = ({ standalone = false }) => {
   return (
-    <footer id="contact" className="relative w-full bg-[var(--color-primary)] text-white pt-32 pb-12 mt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 flex flex-col items-center">
-        
-        {/* Massive Footer Heading */}
-        <motion.h2 
+    <footer
+      id="contact"
+      className={[
+        'relative w-full bg-[var(--color-primary)] pb-12 pt-32 text-white',
+        standalone ? 'mt-0' : 'mt-24',
+      ].join(' ')}
+    >
+      <div className="mx-auto flex max-w-7xl flex-col items-center px-4 sm:px-8 md:px-12">
+        <motion.h2
           initial={{ y: 50, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-[10vw] md:text-[8vw] font-antonio leading-none text-center mb-16"
+          className="mb-16 text-center text-[10vw] leading-none md:text-[8vw]"
         >
-          LET'S WORK<br/><span className="opacity-70">TOGETHER</span>
+          LET&apos;S BUILD
+          <br />
+          <span className="opacity-70">SOMETHING REAL</span>
         </motion.h2>
 
-        {/* Contact Form & Info Grid */}
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 items-start">
-          
-          {/* Quick Info */}
-          <motion.div 
+        <div className="mb-24 grid w-full grid-cols-1 items-start gap-16 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -29,85 +32,148 @@ const Footer = ({ isDark }) => {
             className="flex flex-col gap-8"
           >
             <div>
-              <h4 className="text-xl font-antonio mb-2 opacity-80">EMAIL</h4>
-              <a href="mailto:hello@portavia.com" className="text-2xl md:text-3xl font-medium hover:underline transition-all">
-                hello@portavia.com
+              <h4 className="mb-2 text-xl opacity-80">EMAIL</h4>
+              <a
+                href="mailto:abhay00991@gmail.com"
+                className="break-all text-2xl font-medium transition-all hover:underline md:text-3xl"
+              >
+                abhay00991@gmail.com
               </a>
             </div>
+
             <div>
-              <h4 className="text-xl font-antonio mb-2 opacity-80">PHONE</h4>
-              <a href="tel:+1234567890" className="text-2xl md:text-3xl font-medium hover:underline transition-all">
-                +1 (234) 567-890
+              <h4 className="mb-2 text-xl opacity-80">PHONE</h4>
+              <a
+                href="tel:+919797485185"
+                className="text-2xl font-medium transition-all hover:underline md:text-3xl"
+              >
+                +91 9797485185
               </a>
             </div>
-            
-            <div className="mt-8 flex gap-4">
-              {['Twitter', 'LinkedIn', 'Dribbble', 'Behance'].map((social, i) => (
-                <a 
-                  key={i} 
-                  href="#" 
-                  className="w-12 h-12 rounded-full border border-white/20 hover:border-white transition-colors flex items-center justify-center font-medium"
+
+            <div>
+              <h4 className="mb-2 text-xl opacity-80">LOCATION</h4>
+              <p className="text-2xl font-medium md:text-3xl">Delhi, India</p>
+            </div>
+
+            <div>
+              <h4 className="mb-2 text-xl opacity-80">PROFILES</h4>
+              <div className="flex flex-col gap-3 text-lg font-medium md:text-2xl">
+                <a
+                  href="https://github.com/Abh7ay"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="break-all transition-all hover:underline"
                 >
-                  <ArrowUpRight size={20} />
+                  github.com/Abh7ay
                 </a>
-              ))}
+                <a
+                  href="https://linkedin.com/in/abh7y"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="break-all transition-all hover:underline"
+                >
+                  linkedin.com/in/abh7y
+                </a>
+              </div>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-4">
+              <a
+                href="mailto:abhay00991@gmail.com"
+                className="flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 font-medium transition-colors hover:border-white"
+              >
+                Contact Me
+                <ArrowUpRight size={18} />
+              </a>
+              <a
+                href="#/projects"
+                className="flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 font-medium transition-colors hover:border-white"
+              >
+                View Projects
+                <ArrowUpRight size={18} />
+              </a>
             </div>
           </motion.div>
 
-          {/* Contact Form */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-white/10 p-8 md:p-12 rounded-[2rem] backdrop-blur-md border border-white/20"
+            className="rounded-[2rem] border border-white/20 bg-white/10 p-8 backdrop-blur-md md:p-12"
           >
-            <form className="flex flex-col gap-6 w-full">
-              <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium tracking-wide uppercase opacity-80 pl-2">Name</label>
-                <input 
-                  type="text" 
-                  placeholder="John Doe"
-                  className="bg-transparent border-b-2 border-white/20 px-2 py-3 focus:outline-none focus:border-white transition-colors"
-                />
+            <div className="flex flex-col gap-6">
+              <div>
+                <div className="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-white/62">
+                  Current Focus
+                </div>
+                <h3 className="mb-4 text-3xl leading-none md:text-4xl">
+                  Scalable platforms, real-time systems, and AI-assisted product
+                  experiences.
+                </h3>
+                <p className="text-base leading-8 text-white/80 md:text-lg">
+                  Building scalable esports platforms and exploring real-time
+                  systems using modern frontend technologies and AI integrations.
+                </p>
               </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium tracking-wide uppercase opacity-80 pl-2">Email</label>
-                <input 
-                  type="email" 
-                  placeholder="john@example.com"
-                  className="bg-transparent border-b-2 border-white/20 px-2 py-3 focus:outline-none focus:border-white transition-colors"
-                />
+
+              <div className="grid gap-4 pt-2 sm:grid-cols-2">
+                <div className="rounded-[1.5rem] border border-white/15 bg-white/8 p-5">
+                  <div className="mb-2 text-sm uppercase tracking-[0.24em] text-white/60">
+                    Focus Areas
+                  </div>
+                  <div className="text-lg font-medium">
+                    Full stack products, AI systems, and high-performance UI
+                  </div>
+                </div>
+                <div className="rounded-[1.5rem] border border-white/15 bg-white/8 p-5">
+                  <div className="mb-2 text-sm uppercase tracking-[0.24em] text-white/60">
+                    Engineering Style
+                  </div>
+                  <div className="text-lg font-medium">
+                    Clean architecture, scalability, and user-centric execution
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium tracking-wide uppercase opacity-80 pl-2">Project Details</label>
-                <textarea 
-                  rows="3"
-                  placeholder="Tell me about your project..."
-                  className="bg-transparent border-b-2 border-white/20 px-2 py-3 focus:outline-none focus:border-white transition-colors resize-none"
-                />
-              </div>
-              <button 
-                type="button" 
-                className="mt-6 w-full bg-white text-[var(--color-primary)] py-4 rounded-xl font-bold text-lg hover:bg-black hover:text-white hover:border-transparent transition-colors flex items-center justify-center gap-3 group"
+
+              <a
+                href="https://linkedin.com/in/abh7y"
+                target="_blank"
+                rel="noreferrer"
+                className="group mt-4 flex w-full items-center justify-center gap-3 rounded-xl bg-white py-4 text-lg font-bold text-[var(--color-primary)] transition-colors hover:bg-black hover:text-white"
               >
-                SUBMIT REQUEST
-                <ArrowUpRight className="group-hover:rotate-45 transition-transform" />
-              </button>
-            </form>
+                CONNECT ON LINKEDIN
+                <ArrowUpRight className="transition-transform group-hover:rotate-45" />
+              </a>
+            </div>
           </motion.div>
-          
         </div>
 
-        {/* Bottom Banner */}
-        <div className="w-full flex flex-col md:flex-row items-center justify-between border-t border-white/20 pt-8 mt-10 opacity-70 text-sm font-medium gap-4">
-          <p>© {new Date().getFullYear()} Portavia Template. All rights reserved.</p>
+        <div className="mt-10 flex w-full flex-col items-center justify-between gap-4 border-t border-white/20 pt-8 text-sm font-medium opacity-70 md:flex-row">
+          <p>© {new Date().getFullYear()} Abhishek Mathur. Built as a personal portfolio.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:opacity-100 transition-opacity">Privacy Policy</a>
-            <a href="#" className="hover:opacity-100 transition-opacity">Terms of Service</a>
+            <a href="mailto:abhay00991@gmail.com" className="transition-opacity hover:opacity-100">
+              Email
+            </a>
+            <a
+              href="https://github.com/Abh7ay"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-opacity hover:opacity-100"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/abh7y"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-opacity hover:opacity-100"
+            >
+              LinkedIn
+            </a>
           </div>
         </div>
-
       </div>
     </footer>
   );

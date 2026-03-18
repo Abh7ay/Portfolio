@@ -1,123 +1,303 @@
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import {
+  ArrowUpRight,
+  Award,
+  BriefcaseBusiness,
+  GraduationCap,
+  Rocket,
+} from 'lucide-react';
 
-const AboutSection = ({ slotRef, dockedCard }) => {
-  const sectionRef = useRef(null);
+const aboutParagraphs = [
+  'I am a software developer focused on building scalable systems and AI-driven solutions, with hands-on experience across full stack development and machine learning.',
+  'My work involves developing responsive web applications, designing intelligent systems, and working with data-driven architectures to solve real-world problems efficiently.',
+  'I emphasize clean architecture, performance optimization, and user-centric design in every project I build.',
+  'I am particularly interested in esports platforms, real-time applications, and intelligent interfaces that enhance user engagement at scale.',
+];
 
-  const stats = [
-    { value: "11", label: "Years of Experience" },
-    { value: "249", label: "Completed Projects" },
-    { value: "46+", label: "Clients Worldwide" }
-  ];
+const stats = [
+  { value: '360+', label: 'Coding Problems Solved' },
+  { value: '4', label: 'Featured Projects' },
+  { value: '2', label: 'Google Programs Completed' },
+];
 
-  const experiences = [
-    {
-      role: "Lead Designer",
-      company: "Google",
-      period: "2020 - Present",
-      description: "Leading a team of designers to create intuitive and engaging experiences for millions of users."
-    },
-    {
-      role: "Senior UI/UX Designer",
-      company: "Apple",
-      period: "2018 - 2020",
-      description: "Designed core experiences for iOS native applications, focusing on minimal and fluid interactions."
-    },
-    {
-      role: "Product Designer",
-      company: "Spotify",
-      period: "2015 - 2018",
-      description: "Contributed to the web player redesign and established new design system components."
-    }
-  ];
+const achievements = [
+  'Completed Google Cloud Program and Google Cloud Facilitator Program',
+  'Attended Google DevFest in 2022 and 2025',
+  'Participated in hackathons including iNeuron, BFF, and Glitch',
+  'Selected for the OPPO User Trial Research Program in Thailand',
+];
 
+const education = [
+  {
+    title: 'B.Tech - Computer Science Engineering',
+    institution: 'Delhi Technical Campus',
+    period: '2020 - 2024',
+  },
+];
+
+const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
   return (
-    <section id="about" ref={sectionRef} className="py-24 px-4 sm:px-8 md:px-12 max-w-7xl mx-auto border-t border-[var(--border-color)]">
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-        
-        {/* Left Side: Slot where the traveling card docks */}
-        <div
-          ref={slotRef}
-          className="relative lg:sticky lg:top-32 w-full aspect-[4/5] rounded-[2rem] overflow-hidden bg-transparent order-2 lg:order-1"
-        >
-          {dockedCard ? (
-            <div className="absolute inset-0 flex items-center justify-center">{dockedCard}</div>
-          ) : null}
-        </div>
-
-        {/* Right Side: About Content */}
-        <div className="flex flex-col gap-10 order-1 lg:order-2">
-          
-          <motion.div 
+    <section
+      id="about"
+      ref={sectionRef}
+      className="mx-auto max-w-7xl border-t border-[var(--border-color)] px-4 py-24 sm:px-8 md:px-12"
+    >
+      <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.9fr)] lg:gap-20">
+        <div className="order-1 flex flex-col gap-14">
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="space-y-8"
           >
-            <h2 className="text-4xl md:text-5xl font-antonio mb-6">ABOUT ME</h2>
-            <p className="text-[var(--muted-text)] text-base md:text-lg leading-relaxed mb-10">
-              Hi, I'm Duncan — a digital designer and Framer developer passionate about crafting meaningful and impactful digital experiences. I believe that great design is not just about aesthetics, but about solving problems and creating human connections.
-            </p>
+            <div>
+              <div className="mb-4 text-[11px] font-medium uppercase tracking-[0.3em] text-[var(--color-primary)]">
+                About Me
+              </div>
+              <h2 className="mb-4 text-4xl md:text-5xl">
+                Software Developer focused on Scalable Systems &amp; AI Solutions
+              </h2>
+              <p className="mb-6 max-w-3xl text-sm uppercase tracking-[0.24em] text-[var(--muted-text)] sm:text-base">
+                Building intelligent products with clean systems thinking
+              </p>
+              <div className="space-y-5 text-base leading-8 text-[var(--muted-text)] md:text-lg">
+                {aboutParagraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-6 mb-12">
-              {stats.map((stat, index) => (
-                <div key={index} className="flex flex-col gap-2">
-                  <span className="text-4xl md:text-5xl font-antonio text-[var(--color-primary)]">{stat.value}</span>
-                  <span className="text-xs md:text-sm font-medium text-[var(--muted-text)] uppercase tracking-wider">{stat.label}</span>
+            <div className="grid grid-cols-1 gap-6 border-y border-[var(--border-color)] py-8 sm:grid-cols-3">
+              {stats.map((stat) => (
+                <div key={stat.label} className="flex flex-col gap-2">
+                  <span className="text-4xl font-antonio text-[var(--color-primary)] md:text-5xl">
+                    {stat.value}
+                  </span>
+                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--muted-text)] md:text-sm">
+                    {stat.label}
+                  </span>
                 </div>
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="flex items-center gap-4 border-b border-[var(--border-color)] pb-12">
-              <button className="flex items-center gap-2 bg-[var(--text-color)] text-[var(--bg-color)] px-8 py-3 rounded-full font-medium transition-transform hover:scale-105">
-                My Story
-              </button>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="https://github.com/Abh7ay"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 rounded-full bg-[var(--text-color)] px-7 py-3 font-medium text-[var(--bg-color)] transition-transform hover:scale-[1.03]"
+              >
+                GitHub
+                <ArrowUpRight size={18} />
+              </a>
+              <a
+                href="https://linkedin.com/in/abh7y"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 rounded-full border border-[var(--border-color)] px-7 py-3 font-medium transition-colors hover:bg-[var(--text-color)] hover:text-[var(--bg-color)]"
+              >
+                LinkedIn
+                <ArrowUpRight size={18} />
+              </a>
             </div>
           </motion.div>
 
-          {/* Experience Timeline */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col gap-8 pt-6"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.06)]"
           >
-            <h3 className="text-3xl font-antonio mb-2">EXPERIENCE & JOURNEY</h3>
-            
-            <div className="flex flex-col gap-8">
-              {experiences.map((exp, index) => (
-                <div key={index} className="relative pl-6 sm:pl-8 group">
-                  {/* Timeline dot */}
-                  <div className="absolute left-0 top-2 w-3 h-3 rounded-full bg-[var(--border-color)] group-hover:bg-[var(--color-primary)] transition-colors z-10" />
-                  {/* Timeline line */}
-                  {index !== experiences.length - 1 && (
-                    <div className="absolute left-[5px] top-4 w-[2px] h-full bg-[var(--border-color)]" />
-                  )}
-                  
-                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 mb-2">
-                    <h4 className="text-xl font-bold flex items-center gap-2 group-hover:text-[var(--color-primary)] transition-colors">
-                      {exp.role}
-                      <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition-opacity" size={18} />
-                    </h4>
-                    <span className="text-sm font-medium text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-3 py-1 rounded-full whitespace-nowrap w-fit">
-                      {exp.period}
-                    </span>
-                  </div>
-                  
-                  <h5 className="font-antonio tracking-wide text-lg text-[var(--muted-text)] mb-3">{exp.company}</h5>
-                  <p className="text-[var(--muted-text)] text-sm leading-relaxed max-w-md">
-                    {exp.description}
+            <div className="mb-6 flex items-center gap-3 text-[var(--color-primary)]">
+              <BriefcaseBusiness size={18} />
+              <span className="text-[11px] font-medium uppercase tracking-[0.28em]">
+                Experience
+              </span>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <h3 className="text-3xl md:text-4xl">Machine Learning Intern</h3>
+                  <p className="mt-1 text-lg font-medium text-[var(--color-primary)]">
+                    EiSystems
                   </p>
+                </div>
+                <span className="w-fit rounded-full bg-[var(--color-primary)]/12 px-4 py-1.5 text-sm font-medium text-[var(--color-primary)]">
+                  Practical ML Delivery
+                </span>
+              </div>
+              <p className="max-w-3xl text-[var(--muted-text)] leading-7">
+                Worked on building and evaluating machine learning models for
+                practical applications across domains, with emphasis on model
+                quality, data understanding, and rapid prototyping.
+              </p>
+              <ul className="grid gap-3 text-sm leading-7 text-[var(--muted-text)] md:grid-cols-2">
+                <li className="rounded-[1.25rem] border border-[var(--border-color)] p-4">
+                  Developed and tested ML models and neural networks.
+                </li>
+                <li className="rounded-[1.25rem] border border-[var(--border-color)] p-4">
+                  Analyzed large datasets to identify patterns and insights.
+                </li>
+                <li className="rounded-[1.25rem] border border-[var(--border-color)] p-4">
+                  Built rapid prototypes to solve real-world system problems.
+                </li>
+                <li className="rounded-[1.25rem] border border-[var(--border-color)] p-4">
+                  Contributed to AI-driven solutions with efficient, practical
+                  experiments.
+                </li>
+              </ul>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 36 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.18 }}
+            className="rounded-[2rem] border border-[var(--border-color)] bg-[linear-gradient(145deg,rgba(94,110,242,0.12),rgba(94,110,242,0.04))] p-8"
+          >
+            <div className="mb-6 flex items-center gap-3 text-[var(--color-primary)]">
+              <Rocket size={18} />
+              <span className="text-[11px] font-medium uppercase tracking-[0.28em]">
+                Current Focus
+              </span>
+            </div>
+            <p className="max-w-4xl text-base leading-8 text-[var(--muted-text)] md:text-lg">
+              Building scalable esports platforms and exploring real-time
+              systems using modern frontend technologies and AI integrations.
+            </p>
+          </motion.div>
+        </div>
+
+        <div className="order-2 flex flex-col gap-8 lg:pt-2">
+          <div
+            ref={slotRef}
+            className="relative w-full overflow-hidden rounded-[2rem] bg-transparent aspect-[4/5] lg:sticky lg:top-28"
+          >
+            <div className="absolute inset-0 rounded-[2rem] border border-[var(--border-color)] bg-[linear-gradient(155deg,rgba(94,110,242,0.12),rgba(17,17,17,0.02)_48%,rgba(94,110,242,0.04))] p-6 sm:p-7">
+              <div className="flex h-full flex-col justify-between">
+                <div>
+                  <div className="mb-3 text-[11px] uppercase tracking-[0.28em] text-[var(--color-primary)]">
+                    Profile Snapshot
+                  </div>
+                  <div className="text-2xl tracking-tight sm:text-3xl">
+                    Full Stack &amp; AI Developer
+                  </div>
+                  <p className="mt-4 max-w-sm text-sm leading-7 text-[var(--muted-text)]">
+                    Building scalable interfaces, intelligent systems, and
+                    modern product experiences from frontend to ML workflows.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="rounded-[1.25rem] border border-[var(--border-color)] bg-[var(--card-bg)]/65 p-4">
+                    <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--muted-text)]">
+                      Based In
+                    </div>
+                    <div className="mt-2 font-medium">Delhi, India</div>
+                  </div>
+                  <div className="rounded-[1.25rem] border border-[var(--border-color)] bg-[var(--card-bg)]/65 p-4">
+                    <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--muted-text)]">
+                      Focus
+                    </div>
+                    <div className="mt-2 font-medium">Systems + AI</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {dockedCard ? (
+              <div className="absolute inset-0 flex items-center justify-center">
+                {dockedCard}
+              </div>
+            ) : null}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.08 }}
+            className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-8"
+          >
+            <div className="mb-6 flex items-center gap-3 text-[var(--color-primary)]">
+              <Award size={18} />
+              <span className="text-[11px] font-medium uppercase tracking-[0.28em]">
+                Achievements
+              </span>
+            </div>
+            <div className="space-y-4 text-sm leading-7 text-[var(--muted-text)] md:text-base">
+              {achievements.map((achievement) => (
+                <div
+                  key={achievement}
+                  className="rounded-[1.25rem] border border-[var(--border-color)] px-5 py-4"
+                >
+                  {achievement}
                 </div>
               ))}
             </div>
           </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.14 }}
+            className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-8"
+          >
+            <div className="mb-6 flex items-center gap-3 text-[var(--color-primary)]">
+              <GraduationCap size={18} />
+              <span className="text-[11px] font-medium uppercase tracking-[0.28em]">
+                Education
+              </span>
+            </div>
+            <div className="space-y-5">
+              {education.map((item) => (
+                <div
+                  key={`${item.title}-${item.institution}`}
+                  className="rounded-[1.25rem] border border-[var(--border-color)] p-5"
+                >
+                  <div className="text-lg font-semibold">{item.title}</div>
+                  <div className="mt-1 text-sm text-[var(--muted-text)]">
+                    {item.institution}
+                  </div>
+                  {item.period ? (
+                    <div className="mt-3 text-xs font-medium uppercase tracking-[0.22em] text-[var(--color-primary)]">
+                      {item.period}
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            <div className="rounded-[1.5rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-5">
+              <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--muted-text)]">
+                Location
+              </div>
+              <div className="mt-2 text-lg font-medium">Delhi, India</div>
+            </div>
+            <div className="rounded-[1.5rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-5">
+              <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--muted-text)]">
+                Contact
+              </div>
+              <a
+                href="mailto:abhay00991@gmail.com"
+                className="mt-2 block text-lg font-medium hover:text-[var(--color-primary)]"
+              >
+                abhay00991@gmail.com
+              </a>
+              <a
+                href="tel:+919797485185"
+                className="mt-1 block text-sm text-[var(--muted-text)] hover:text-[var(--color-primary)]"
+              >
+                +91 9797485185
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
