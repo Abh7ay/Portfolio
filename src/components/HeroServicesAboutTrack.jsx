@@ -400,10 +400,15 @@ export default function HeroServicesAboutTrack() {
   const originX = useSpring(rawOriginX, transformSpring);
   const filter = useMotionTemplate`blur(${blur}px) brightness(${brightness}) saturate(${saturate})`;
   const boxShadow = useTransform(shadow, (v) => `0 28px 90px rgba(0,0,0,${v})`);
-  const floatingOpacity = useTransform(
+  const heroFloatingOpacity = useTransform(
     smoothScrollY,
-    [layout.stages.fadeStart, layout.stages.fadeEnd],
-    [1, 0],
+    [layout.stages.start, layout.stages.serviceMid, layout.stages.serviceDock],
+    [1, 1, 0],
+  );
+  const sectionFloatingOpacity = useTransform(
+    smoothScrollY,
+    [layout.stages.start, layout.stages.serviceMid, layout.stages.serviceDock, layout.stages.fadeStart, layout.stages.fadeEnd],
+    [0, 0, 1, 1, 0],
   );
   const dockedOpacity = useTransform(
     smoothScrollY,
@@ -418,10 +423,38 @@ export default function HeroServicesAboutTrack() {
       <ProfileShowcaseCard />
     </motion.div>
   );
+  const floatingCardStyles = {
+    x: cardX,
+    y: cardY,
+    z,
+    rotateY,
+    rotateX,
+    rotateZ,
+    scale,
+    filter,
+    boxShadow,
+    originX,
+    originY: 0.5,
+    transformPerspective: 1800,
+    transformStyle: 'preserve-3d',
+  };
+  const heroCard = (
+    <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center">
+      <motion.div
+        className="pointer-events-none"
+        style={{
+          opacity: heroFloatingOpacity,
+          ...floatingCardStyles,
+        }}
+      >
+        <ProfileShowcaseCard />
+      </motion.div>
+    </div>
+  );
 
   return (
     <div className="relative">
-      <HeroSection sectionRef={heroSectionRef} />
+      <HeroSection sectionRef={heroSectionRef} heroCard={heroCard} />
       <ServicesSection sectionRef={servicesSectionRef} slotRef={servicesSlotRef} />
       <AboutSection sectionRef={aboutSectionRef} slotRef={aboutSlotRef} dockedCard={dockedCard} />
 
@@ -434,20 +467,8 @@ export default function HeroServicesAboutTrack() {
         <motion.div
           className="pointer-events-none"
           style={{
-            opacity: floatingOpacity,
-            x: cardX,
-            y: cardY,
-            z,
-            rotateY,
-            rotateX,
-            rotateZ,
-            scale,
-            filter,
-            boxShadow,
-            originX,
-            originY: 0.5,
-            transformPerspective: 1800,
-            transformStyle: 'preserve-3d',
+            opacity: sectionFloatingOpacity,
+            ...floatingCardStyles,
           }}
         >
           <ProfileShowcaseCard />

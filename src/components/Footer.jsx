@@ -6,10 +6,16 @@ const Footer = ({ standalone = false }) => {
     <footer
       id="contact"
       className={[
-        'relative w-full bg-[var(--color-primary)] pb-12 pt-32 text-white',
+        'relative w-full overflow-hidden bg-[#101014] pb-12 pt-32 text-white',
         standalone ? 'mt-0' : 'mt-24',
       ].join(' ')}
     >
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0)_24%,rgba(255,255,255,0.02)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(121,106,255,0.26),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(168,132,255,0.16),transparent_24%),radial-gradient(circle_at_72%_72%,rgba(94,110,242,0.18),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:40px_40px] opacity-[0.06]" />
+      <div className="pointer-events-none absolute -top-18 left-[8%] h-56 w-56 rounded-full bg-[rgba(120,102,255,0.22)] blur-3xl" />
+      <div className="pointer-events-none absolute right-[10%] bottom-[10%] h-72 w-72 rounded-full bg-[rgba(172,130,255,0.16)] blur-3xl" />
+
       <div className="mx-auto flex max-w-7xl flex-col items-center px-4 sm:px-8 md:px-12">
         <motion.h2
           initial={{ y: 50, opacity: 0 }}
@@ -101,7 +107,7 @@ const Footer = ({ standalone = false }) => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="rounded-[2rem] border border-white/20 bg-white/10 p-8 backdrop-blur-md md:p-12"
+            className="rounded-[2rem] border border-white/18 bg-[linear-gradient(145deg,rgba(255,255,255,0.14),rgba(255,255,255,0.06))] p-8 shadow-[0_24px_80px_rgba(68,52,140,0.28)] backdrop-blur-xl md:p-12"
           >
             <div className="flex flex-col gap-6">
               <div>
@@ -119,7 +125,7 @@ const Footer = ({ standalone = false }) => {
               </div>
 
               <div className="grid gap-4 pt-2 sm:grid-cols-2">
-                <div className="rounded-[1.5rem] border border-white/15 bg-white/8 p-5">
+                <div className="rounded-[1.5rem] border border-white/15 bg-[rgba(255,255,255,0.08)] p-5 backdrop-blur-md">
                   <div className="mb-2 text-sm uppercase tracking-[0.24em] text-white/60">
                     Focus Areas
                   </div>
@@ -127,7 +133,7 @@ const Footer = ({ standalone = false }) => {
                     Full stack products, AI systems, and high-performance UI
                   </div>
                 </div>
-                <div className="rounded-[1.5rem] border border-white/15 bg-white/8 p-5">
+                <div className="rounded-[1.5rem] border border-white/15 bg-[rgba(255,255,255,0.08)] p-5 backdrop-blur-md">
                   <div className="mb-2 text-sm uppercase tracking-[0.24em] text-white/60">
                     Engineering Style
                   </div>
@@ -138,12 +144,10 @@ const Footer = ({ standalone = false }) => {
               </div>
 
               <a
-                href="https://linkedin.com/in/abh7y"
-                target="_blank"
-                rel="noreferrer"
+                href="mailto:abhay00991@gmail.com"
                 className="group mt-4 flex w-full items-center justify-center gap-3 rounded-xl bg-white py-4 text-lg font-bold text-[var(--color-primary)] transition-colors hover:bg-black hover:text-white"
               >
-                CONNECT ON LINKEDIN
+                EMAIL ME
                 <ArrowUpRight className="transition-transform group-hover:rotate-45" />
               </a>
             </div>

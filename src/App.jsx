@@ -88,11 +88,14 @@ function App() {
     }
 
     return (
-      <main className="flex flex-col gap-12 md:gap-24">
-        <HeroServicesAboutTrack />
-        <TechStackMarquee />
-        <ProjectsSection />
-      </main>
+      <>
+        <main className="flex flex-col gap-12 md:gap-24">
+          <HeroServicesAboutTrack />
+          <TechStackMarquee />
+          <ProjectsSection />
+        </main>
+        <Footer />
+      </>
     );
   }
 

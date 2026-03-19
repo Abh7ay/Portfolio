@@ -5,6 +5,7 @@ const featuredProjects = [
   {
     title: 'EsportsVerse',
     label: 'Primary Featured',
+    liveUrl: 'https://esports-verse.in',
     tagline:
       'A scalable esports platform delivering structured content, team insights, and interactive user experiences.',
     description:
@@ -32,6 +33,7 @@ const featuredProjects = [
   {
     title: 'Nestle@',
     label: 'Secondary Featured',
+    liveUrl: 'https://nestle-at.vercel.app',
     tagline:
       'A high-performance, responsive web interface focused on clean design and fast interaction.',
     description:
@@ -168,6 +170,19 @@ const ProjectsSection = () => {
                 <p className="max-w-2xl text-sm leading-8 text-white/74 md:text-base">
                   {project.description}
                 </p>
+                {project.liveUrl ? (
+                  <div className="flex flex-wrap gap-3">
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition-transform hover:scale-[1.03]"
+                    >
+                      View Live
+                      <ArrowUpRight size={16} />
+                    </a>
+                  </div>
+                ) : null}
                 <div>
                   <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.24em] text-white/55">
                     Tech Stack

@@ -176,38 +176,6 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
             ref={slotRef}
             className="relative w-full overflow-hidden rounded-[2rem] bg-transparent aspect-[4/5] lg:sticky lg:top-28"
           >
-            <div className="absolute inset-0 rounded-[2rem] border border-[var(--border-color)] bg-[linear-gradient(155deg,rgba(94,110,242,0.12),rgba(17,17,17,0.02)_48%,rgba(94,110,242,0.04))] p-6 sm:p-7">
-              <div className="flex h-full flex-col justify-between">
-                <div>
-                  <div className="mb-3 text-[11px] uppercase tracking-[0.28em] text-[var(--color-primary)]">
-                    Profile Snapshot
-                  </div>
-                  <div className="text-2xl tracking-tight sm:text-3xl">
-                    Full Stack &amp; AI Developer
-                  </div>
-                  <p className="mt-4 max-w-sm text-sm leading-7 text-[var(--muted-text)]">
-                    Building scalable interfaces, intelligent systems, and
-                    modern product experiences from frontend to ML workflows.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="rounded-[1.25rem] border border-[var(--border-color)] bg-[var(--card-bg)]/65 p-4">
-                    <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--muted-text)]">
-                      Based In
-                    </div>
-                    <div className="mt-2 font-medium">Delhi, India</div>
-                  </div>
-                  <div className="rounded-[1.25rem] border border-[var(--border-color)] bg-[var(--card-bg)]/65 p-4">
-                    <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--muted-text)]">
-                      Focus
-                    </div>
-                    <div className="mt-2 font-medium">Systems + AI</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {dockedCard ? (
               <div className="absolute inset-0 flex items-center justify-center">
                 {dockedCard}

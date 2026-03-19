@@ -30,7 +30,7 @@ const landingLinks = [
   },
 ];
 
-export default function HeroSection({ sectionRef }) {
+export default function HeroSection({ sectionRef, heroCard = null }) {
   return (
     <section
       ref={sectionRef}
@@ -42,6 +42,7 @@ export default function HeroSection({ sectionRef }) {
       <div className="pointer-events-none absolute top-[12%] left-[8%] h-44 w-44 rounded-full bg-white/10 blur-3xl" />
       <div className="pointer-events-none absolute right-[12%] bottom-[12%] h-56 w-56 rounded-full bg-[var(--color-primary)]/18 blur-3xl" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10" />
+      {heroCard}
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-col px-4 pb-18 pt-28 sm:px-8 md:px-12 lg:pb-20 lg:pt-32">
         <div className="relative z-10 grid min-h-[72vh] items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,26rem)_minmax(0,1fr)] lg:items-center lg:gap-12">
