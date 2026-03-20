@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import HeroServicesAboutTrack from './components/HeroServicesAboutTrack';
 import TechStackMarquee from './components/TechStackMarquee';
@@ -103,6 +104,7 @@ function App() {
     <div className="relative min-h-screen w-full font-sans selection:bg-[var(--color-primary)] selection:text-white">
       <Navbar toggleTheme={toggleTheme} currentRoute={route} />
       {renderPage()}
+      <Analytics />
     </div>
   );
 }
