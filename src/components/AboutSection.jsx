@@ -156,7 +156,7 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.18 }}
-            className="rounded-[2rem] border border-[var(--border-color)] bg-[linear-gradient(145deg,rgba(94,110,242,0.12),rgba(94,110,242,0.04))] p-8"
+            className="rounded-[2rem] border border-[var(--border-color)] bg-[linear-gradient(145deg,rgba(197,157,217,0.22),rgba(122,63,145,0.1))] p-8"
           >
             <div className="mb-6 flex items-center gap-3 text-[var(--color-primary)]">
               <Rocket size={18} />

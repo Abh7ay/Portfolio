@@ -28,7 +28,7 @@ const featuredProjects = [
       'API-driven dynamic content',
     ],
     theme:
-      'bg-[linear-gradient(135deg,#0f172a_0%,#132f57_38%,#1d4ed8_100%)]',
+      'bg-[linear-gradient(135deg,#2B0D3E_0%,#53246A_42%,#7A3F91_100%)]',
   },
   {
     title: 'Nestle@',
@@ -52,7 +52,7 @@ const featuredProjects = [
     ],
     future: [],
     theme:
-      'bg-[linear-gradient(135deg,#161616_0%,#2f2320_45%,#6b4f3b_100%)]',
+      'bg-[linear-gradient(135deg,#3A174E_0%,#7A3F91_52%,#C59DD9_145%)]',
   },
 ];
 

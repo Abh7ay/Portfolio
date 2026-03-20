@@ -6,15 +6,15 @@ const Footer = ({ standalone = false }) => {
     <footer
       id="contact"
       className={[
-        'relative w-full overflow-hidden bg-[#101014] pb-12 pt-32 text-white',
+        'relative w-full overflow-hidden bg-[#09070F] pb-12 pt-32 text-white',
         standalone ? 'mt-0' : 'mt-24',
       ].join(' ')}
     >
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0)_24%,rgba(255,255,255,0.02)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(121,106,255,0.26),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(168,132,255,0.16),transparent_24%),radial-gradient(circle_at_72%_72%,rgba(94,110,242,0.18),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(122,63,145,0.22),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(242,234,247,0.08),transparent_24%),radial-gradient(circle_at_72%_72%,rgba(197,157,217,0.12),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))]" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:40px_40px] opacity-[0.06]" />
-      <div className="pointer-events-none absolute -top-18 left-[8%] h-56 w-56 rounded-full bg-[rgba(120,102,255,0.22)] blur-3xl" />
-      <div className="pointer-events-none absolute right-[10%] bottom-[10%] h-72 w-72 rounded-full bg-[rgba(172,130,255,0.16)] blur-3xl" />
+      <div className="pointer-events-none absolute -top-18 left-[8%] h-56 w-56 rounded-full bg-[rgba(197,157,217,0.14)] blur-3xl" />
+      <div className="pointer-events-none absolute right-[10%] bottom-[10%] h-72 w-72 rounded-full bg-[rgba(122,63,145,0.2)] blur-3xl" />
 
       <div className="mx-auto flex max-w-7xl flex-col items-center px-4 sm:px-8 md:px-12">
         <motion.h2
@@ -107,7 +107,7 @@ const Footer = ({ standalone = false }) => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="rounded-[2rem] border border-white/18 bg-[linear-gradient(145deg,rgba(255,255,255,0.14),rgba(255,255,255,0.06))] p-8 shadow-[0_24px_80px_rgba(68,52,140,0.28)] backdrop-blur-xl md:p-12"
+            className="rounded-[2rem] border border-white/18 bg-[linear-gradient(145deg,rgba(242,234,247,0.16),rgba(197,157,217,0.06))] p-8 shadow-[0_24px_80px_rgba(43,13,62,0.3)] backdrop-blur-xl md:p-12"
           >
             <div className="flex flex-col gap-6">
               <div>

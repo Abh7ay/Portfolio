@@ -44,7 +44,7 @@ export default function ProfileShowcaseCard() {
       </div>
 
       <div
-        className="absolute inset-0 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(160deg,#0f1117_0%,#1b2032_52%,#5E6EF2_130%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backface-hidden"
+        className="absolute inset-0 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(160deg,#2B0D3E_0%,#4D2165_52%,#7A3F91_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backface-hidden"
         style={{ transform: 'rotateY(180deg)' }}
       >
         <div className="relative flex h-full w-full flex-col justify-between p-6 text-white sm:p-7">

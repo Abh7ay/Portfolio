@@ -39,7 +39,7 @@ export default function HeroServicesAboutTrack() {
     : { stiffness: 110, damping: 28, mass: 0.45 });
   const rotationDriver = useSpring(scrollY, prefersReducedMotion
     ? { stiffness: 180, damping: 36, mass: 0.35 }
-    : { stiffness: 96, damping: 24, mass: 0.54 });
+    : { stiffness: 82, damping: 26, mass: 0.62 });
   const transformSpring = prefersReducedMotion
     ? { stiffness: 240, damping: 34, mass: 0.3 }
     : { stiffness: 170, damping: 24, mass: 0.42 };
@@ -177,6 +177,28 @@ export default function HeroServicesAboutTrack() {
   const secondFlipMid = prefersReducedMotion ? 0 : 532;
   const secondFlipDock = prefersReducedMotion ? 0 : 692;
   const secondFlipEnd = prefersReducedMotion ? 0 : 720;
+  const serviceFlipPeakScroll =
+    layout.stages.start + (layout.stages.serviceDock - layout.stages.start) * 0.62;
+  const serviceFlipDockScroll =
+    layout.stages.serviceDock + (layout.stages.serviceSettle - layout.stages.serviceDock) * 0.82;
+  const serviceFlipEndScroll =
+    layout.stages.serviceSettle
+    + (layout.stages.serviceHoldEnd - layout.stages.serviceSettle) * 0.42;
+  const aboutFlipPeakScroll =
+    layout.stages.serviceHoldEnd
+    + (layout.stages.aboutDock - layout.stages.serviceHoldEnd) * 0.62;
+  const aboutFlipDockScroll =
+    layout.stages.aboutDock + (layout.stages.aboutSettle - layout.stages.aboutDock) * 0.72;
+  const rotationTimeline = [
+    layout.stages.start,
+    serviceFlipPeakScroll,
+    serviceFlipDockScroll,
+    serviceFlipEndScroll,
+    layout.stages.serviceHoldEnd,
+    aboutFlipPeakScroll,
+    aboutFlipDockScroll,
+    layout.stages.aboutSettle,
+  ];
   const aboutDeltaX = layout.slots.about.x - layout.slots.services.x;
   const aboutDeltaY = layout.slots.about.y - layout.slots.services.y;
   // Keep the second flip anchored near the Services slot so it doesn't drift right mid-rotation.
@@ -232,46 +254,19 @@ export default function HeroServicesAboutTrack() {
 
   const rawRotateY = useTransform(
     rotationDriver,
-    [
-      layout.stages.start,
-      layout.stages.serviceMid,
-      layout.stages.serviceDock,
-      layout.stages.serviceSettle,
-      layout.stages.serviceHoldEnd,
-      layout.stages.aboutMid,
-      layout.stages.aboutDock,
-      layout.stages.aboutSettle,
-    ],
+    rotationTimeline,
     prefersReducedMotion
       ? [0, 0, 0, 0, 0, 0, 0, 0]
       : [0, firstFlipMid, firstFlipDock, firstFlipEnd, firstFlipEnd, secondFlipMid, secondFlipDock, secondFlipEnd],
   );
   const rawRotateX = useTransform(
     rotationDriver,
-    [
-      layout.stages.start,
-      layout.stages.serviceMid,
-      layout.stages.serviceDock,
-      layout.stages.serviceSettle,
-      layout.stages.serviceHoldEnd,
-      layout.stages.aboutMid,
-      layout.stages.aboutDock,
-      layout.stages.aboutSettle,
-    ],
+    rotationTimeline,
     prefersReducedMotion ? [0, 0, 0, 0, 0, 0, 0, 0] : [8, 16, 10, 2, 1, 16, 10, 0],
   );
   const rawRotateZ = useTransform(
     rotationDriver,
-    [
-      layout.stages.start,
-      layout.stages.serviceMid,
-      layout.stages.serviceDock,
-      layout.stages.serviceSettle,
-      layout.stages.serviceHoldEnd,
-      layout.stages.aboutMid,
-      layout.stages.aboutDock,
-      layout.stages.aboutSettle,
-    ],
+    rotationTimeline,
     prefersReducedMotion
       ? [0, 0, 0, 0, 0, 0, 0, 0]
       : [0, -8, -4, -1, 0, -8, -4, 0],
