@@ -2,58 +2,16 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useRef } from 'react';
 
-/* ── Split-text character reveal ── */
-const charVariants = {
-  hidden: { opacity: 0, y: 44, filter: 'blur(8px)' },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      delay: 0.18 + i * 0.032,
-      duration: 0.6,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-};
-
-function SplitTextReveal({ text, startIndex = 0, className = '' }) {
-  let charCount = startIndex;
-  const words = text.split(' ');
-  return (
-    <span className={className}>
-      {words.map((word, wordIdx) => (
-        <span key={wordIdx} className="inline-block mr-[0.3em]">
-          {word.split('').map((char) => {
-            const i = charCount++;
-            return (
-              <motion.span
-                key={i}
-                custom={i}
-                variants={charVariants}
-                initial="hidden"
-                animate="visible"
-                className="inline-block"
-              >
-                {char}
-              </motion.span>
-            );
-          })}
-        </span>
-      ))}
-    </span>
-  );
-}
-
 /* ── Trust tags ── */
-const trustTags = [
-  'Scalable Systems',
-  'AI-driven Products',
-  'High-performance UI',
-  'Clean Architecture',
-];
+const trustTags = ['Scalable Systems', 'AI-driven Products', 'High-performance UI'];
 
-/* ── Component ── */
+/* ── Stagger animation presets ── */
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
+});
+
 export default function HeroSection({ sectionRef, heroCard = null }) {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -61,7 +19,7 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
     offset: ['start start', 'end start'],
   });
 
-  // Scroll-based parallax for the right visual
+  /* Scroll-based parallax for right column */
   const rightY = useSpring(
     useTransform(scrollYProgress, [0, 1], [0, 80]),
     { stiffness: 120, damping: 30 }
@@ -75,8 +33,11 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
     { stiffness: 120, damping: 30 }
   );
 
-  const line1 = 'I engineer high-performance';
-  const line2 = 'frontend systems that scale.';
+  /* Scroll-based shift for center card */
+  const cardX = useSpring(
+    useTransform(scrollYProgress, [0, 0.6], [0, 60]),
+    { stiffness: 100, damping: 28 }
+  );
 
   return (
     <section
@@ -107,117 +68,101 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
         }}
       />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[var(--hero-topline)]" />
-
-      {/* ── Floating card (from HeroServicesAboutTrack) ── */}
       {heroCard}
 
       {/* ── Main content ── */}
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col px-4 pb-18 pt-28 sm:px-8 md:px-12 lg:pb-20 lg:pt-32">
-        <div className="relative z-10 grid min-h-[72vh] items-start gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(22rem,26rem)_minmax(0,0.9fr)] lg:items-center lg:gap-12">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-col px-4 py-28 sm:px-8 md:px-12 lg:py-32">
+        <div className="relative z-10 grid min-h-[72vh] items-start gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,24rem)_minmax(0,0.85fr)] lg:items-center lg:gap-12">
 
-          {/* ═══ LEFT COLUMN ═══ */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col gap-7 self-start pt-4 lg:self-center lg:pt-0"
-          >
+          {/* ═══ LEFT — 50-55% ═══ */}
+          <div className="flex flex-col self-start pt-4 lg:self-center lg:pt-0">
             {/* Availability badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.06 }}
-            >
+            <motion.div {...fadeUp(0.05)}>
               <div className="inline-flex items-center gap-2 rounded-full border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.28em] text-[var(--color-primary)] backdrop-blur-sm">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
                 Available for Opportunities
               </div>
             </motion.div>
 
-            {/* Headline */}
-            <h1 className="text-[clamp(1.8rem,3.8vw,3rem)] font-antonio leading-[0.96] tracking-tight">
-              <SplitTextReveal text="I engineer" startIndex={0} />
-              <br />
-              <SplitTextReveal text="high-performance" startIndex={10} />
-              <br />
-              <SplitTextReveal
-                text="frontend systems that scale."
-                startIndex={26}
-                className="text-[var(--color-primary)]"
-              />
-            </h1>
-
-            {/* Subtext */}
-            <motion.p
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.75 }}
-              className="max-w-lg text-base leading-8 text-[var(--hero-muted)] sm:text-[1.05rem]"
+            {/* Headline — mt-6 from badge */}
+            <motion.h1
+              {...fadeUp(0.15)}
+              className="mt-6 text-[2rem] font-semibold font-antonio leading-[1.08] tracking-tight md:text-[2.75rem] lg:text-[3.5rem]"
             >
-              I build frontend architectures optimized for{' '}
-              <span className="text-[var(--hero-text)] font-medium">speed</span>,{' '}
-              <span className="text-[var(--hero-text)] font-medium">scalability</span>, and{' '}
-              <span className="text-[var(--hero-text)] font-medium">long-term maintainability</span>
-              {' '}— from component systems to full-stack AI integrations.
+              I{' '}
+              <span className="bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] bg-clip-text text-transparent">
+                engineer
+              </span>{' '}
+              high-performance frontend systems that{' '}
+              <span className="bg-gradient-to-r from-[var(--color-primary)] to-[#C084FC] bg-clip-text font-bold text-transparent">
+                scale.
+              </span>
+            </motion.h1>
+
+            {/* Subtext — mt-5 from headline */}
+            <motion.p
+              {...fadeUp(0.35)}
+              className="mt-5 max-w-lg text-lg leading-8 tracking-wide text-[var(--hero-muted)] opacity-80"
+            >
+              Focused on performance, scalability, and clean architecture — I build
+              systems that don't just look good, but perform under real-world conditions.
             </motion.p>
 
-            {/* CTAs */}
+            {/* CTAs — mt-7 from subtext */}
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.9 }}
-              className="flex flex-wrap items-center gap-4"
+              {...fadeUp(0.5)}
+              className="mt-7 flex flex-wrap items-center gap-5"
             >
               <a
                 href="#/projects"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] px-8 py-3.5 text-sm font-semibold text-white shadow-[0_4px_24px_rgba(122,63,145,0.3)] transition-all hover:scale-[1.04] hover:shadow-[0_6px_32px_rgba(122,63,145,0.45)]"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_4px_24px_rgba(122,63,145,0.35)] transition-all hover:scale-[1.04] hover:shadow-[0_8px_36px_rgba(122,63,145,0.5)]"
               >
                 View Work
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </a>
               <a
                 href="#/contact"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] px-7 py-3.5 text-sm font-semibold text-[var(--hero-text)] backdrop-blur-sm transition-all hover:bg-[var(--hero-text)] hover:text-[var(--hero-bg)]"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--hero-border)] px-6 py-3 text-sm font-medium text-[var(--hero-muted)] transition-all hover:border-[var(--hero-text)] hover:text-[var(--hero-text)]"
               >
                 Contact Me
                 <ArrowUpRight size={15} />
               </a>
             </motion.div>
 
-            {/* Trust tags */}
+            {/* Trust strip — mt-6 from CTAs */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1.05 }}
-              className="flex flex-wrap items-center gap-2 pt-1"
+              {...fadeUp(0.65)}
+              className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm tracking-wide text-[var(--hero-soft)]"
             >
               {trustTags.map((tag, idx) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] px-3.5 py-1.5 text-[10px] font-medium uppercase tracking-[0.2em] text-[var(--hero-soft)] backdrop-blur-sm sm:text-[11px]"
-                >
+                <span key={tag} className="flex items-center gap-3">
+                  {idx > 0 && (
+                    <span className="text-[var(--hero-border)]">•</span>
+                  )}
                   {tag}
                 </span>
               ))}
             </motion.div>
-          </motion.div>
+          </div>
 
           {/* ═══ CENTER — ProfileShowcaseCard slot ═══ */}
-          <div
+          <motion.div
             aria-hidden="true"
-            className="mx-auto h-[clamp(20rem,52vw,32rem)] w-[min(74vw,26rem)] shrink-0 lg:h-[32rem] lg:w-[26rem]"
+            style={{ x: cardX }}
+            className="mx-auto h-[clamp(20rem,52vw,32rem)] w-[min(74vw,24rem)] shrink-0 translate-x-2 translate-y-8 lg:h-[32rem] lg:w-[24rem] lg:translate-x-4 lg:translate-y-10"
           />
 
-          {/* ═══ RIGHT COLUMN — Stats & Focus ═══ */}
+          {/* ═══ RIGHT — ~45% ═══ */}
           <motion.div
-            initial={{ opacity: 0, x: 28 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.85, delay: 0.35 }}
+            {...fadeUp(0.4)}
             style={{ y: rightY, scale: rightScale, rotateZ: rightRotate }}
             className="flex flex-col items-start gap-5 self-end pb-3 text-left lg:max-w-sm lg:justify-self-end lg:items-stretch lg:self-center lg:pb-0"
           >
+            {/* Glow behind cards */}
+            <div className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-[var(--hero-glow-c)] opacity-20 blur-3xl" />
+
             {/* Engineering Focus card */}
-            <div className="rounded-[1.7rem] border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] p-6 backdrop-blur-md transition-transform duration-500 hover:scale-[1.02]">
+            <div className="relative rounded-[1.7rem] border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] p-6 backdrop-blur-md transition-all duration-500 hover:scale-[1.02] hover:rotate-0">
               <div className="mb-3 text-[11px] uppercase tracking-[0.28em] text-[var(--hero-soft)]">
                 Engineering Focus
               </div>
@@ -232,7 +177,7 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
 
             {/* Stat cards */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="rounded-[1.5rem] border border-[var(--hero-border)] bg-[var(--hero-panel-strong)] p-5 backdrop-blur-sm transition-transform duration-500 hover:scale-[1.03]">
+              <div className="relative rounded-[1.5rem] border border-[var(--hero-border)] bg-[var(--hero-panel-strong)] p-5 backdrop-blur-sm transition-all duration-500 hover:scale-[1.03]">
                 <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--hero-soft)]">
                   Problem Solving
                 </div>
@@ -243,7 +188,7 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
                   coding problems solved
                 </div>
               </div>
-              <div className="rounded-[1.5rem] border border-[var(--hero-border)] bg-[var(--hero-panel-strong)] p-5 backdrop-blur-sm transition-transform duration-500 hover:scale-[1.03]">
+              <div className="relative rounded-[1.5rem] border border-[var(--hero-border)] bg-[var(--hero-panel-strong)] p-5 backdrop-blur-sm transition-all duration-500 hover:scale-[1.03]">
                 <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--hero-soft)]">
                   Focus
                 </div>
@@ -260,10 +205,8 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
 
         {/* Scroll indicator */}
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.2 }}
-          className="relative z-10 mt-12 flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-[var(--hero-soft)] sm:text-xs"
+          {...fadeUp(0.8)}
+          className="relative z-10 mt-16 flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-[var(--hero-soft)] sm:text-xs"
         >
           <span className="h-px w-16 bg-[var(--hero-border)]" />
           Scroll to explore

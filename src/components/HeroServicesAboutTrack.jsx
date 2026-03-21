@@ -434,7 +434,7 @@ export default function HeroServicesAboutTrack() {
     transformStyle: 'preserve-3d',
   };
   const heroCard = (
-    <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center">
+    <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center" style={{ paddingTop: '5rem', paddingLeft: '6rem' }}>
       <motion.div
         className="pointer-events-none"
         style={{
