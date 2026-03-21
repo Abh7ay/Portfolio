@@ -8,10 +8,10 @@ import {
 } from 'lucide-react';
 
 const aboutParagraphs = [
-  'I am a software developer focused on building scalable systems and AI-driven solutions, with hands-on experience across full stack development and machine learning.',
-  'My work involves developing responsive web applications, designing intelligent systems, and working with data-driven architectures to solve real-world problems efficiently.',
-  'I emphasize clean architecture, performance optimization, and user-centric design in every project I build.',
-  'I am particularly interested in esports platforms, real-time applications, and intelligent interfaces that enhance user engagement at scale.',
+  'I build software that works at scale — from high-performance frontends to AI-powered backend systems. My engineering approach prioritizes clean architecture, measurable performance gains, and shipping code that teams can maintain.',
+  'Every project starts with understanding the real problem. I design systems with clear separation of concerns, optimize for the critical rendering path, and write code that communicates intent.',
+  'I\'ve worked across the full stack — building responsive web applications, designing ML pipelines, and architecting data-driven platforms that handle real-world complexity.',
+  'Currently focused on scalable esports platforms, real-time systems, and intelligent interfaces where frontend craftsmanship meets AI capabilities.',
 ];
 
 const stats = [
@@ -56,10 +56,10 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
                 About Me
               </div>
               <h2 className="mb-4 text-4xl md:text-5xl">
-                Software Developer focused on Scalable Systems &amp; AI Solutions
+                Engineer Who Ships Scalable Systems & AI Solutions
               </h2>
               <p className="mb-6 max-w-3xl text-sm uppercase tracking-[0.24em] text-[var(--muted-text)] sm:text-base">
-                Building intelligent products with clean systems thinking
+                Clean architecture · Measurable performance · Code that lasts
               </p>
               <div className="space-y-5 text-base leading-8 text-[var(--muted-text)] md:text-lg">
                 {aboutParagraphs.map((paragraph) => (
@@ -129,9 +129,7 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
                 </span>
               </div>
               <p className="max-w-3xl text-[var(--muted-text)] leading-7">
-                Worked on building and evaluating machine learning models for
-                practical applications across domains, with emphasis on model
-                quality, data understanding, and rapid prototyping.
+                Built and shipped machine learning models for production use — focused on model quality, data pipeline design, and rapid prototyping under real constraints.
               </p>
               <ul className="grid gap-3 text-sm leading-7 text-[var(--muted-text)] md:grid-cols-2">
                 <li className="rounded-[1.25rem] border border-[var(--border-color)] p-4">
@@ -165,8 +163,8 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
               </span>
             </div>
             <p className="max-w-4xl text-base leading-8 text-[var(--muted-text)] md:text-lg">
-              Building scalable esports platforms and exploring real-time
-              systems using modern frontend technologies and AI integrations.
+              Shipping scalable esports platforms and building real-time
+              systems with modern frontend tooling and AI integrations.
             </p>
           </motion.div>
         </div>

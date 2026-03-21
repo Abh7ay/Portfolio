@@ -6,25 +6,25 @@ const skillGroups = [
   {
     title: 'Programming Languages',
     description:
-      'Languages I rely on for core software engineering, systems thinking, and problem solving across application layers.',
+      'Core languages for systems engineering, algorithmic problem solving, and building across the stack.',
     items: ['Python', 'C++', 'Java', 'C'],
   },
   {
     title: 'AI / Machine Learning',
     description:
-      'Frameworks and libraries I use to experiment with intelligent systems, model training, and ML-powered applications.',
+      'Production ML tooling — from model training and evaluation to deploying intelligent features in applications.',
     items: ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras'],
   },
   {
     title: 'Web Development',
     description:
-      'Frontend and backend tools used to build responsive web apps and maintain scalable product foundations.',
+      'End-to-end web tooling for responsive, performance-first applications and scalable product codebases.',
     items: ['React.js', 'Django', 'Tailwind CSS', 'PHP'],
   },
   {
     title: 'Data & Analytics',
     description:
-      'Data processing and visualization tooling for analysis, experimentation, and model support workflows.',
+      'Data processing, analysis, and visualization for driving decisions and supporting ML pipelines.',
     items: ['Pandas', 'NumPy', 'Matplotlib'],
   },
   {
@@ -63,11 +63,10 @@ const ServicesSection = ({ sectionRef, slotRef, slotContent = null }) => {
               <span className="text-sm font-semibold tracking-wide">CORE SKILLS</span>
             </div>
 
-            <h2 className="mb-6 text-4xl md:text-5xl">Skills That Support Scalable Products</h2>
+            <h2 className="mb-6 text-4xl md:text-5xl">Engineering Toolkit</h2>
             <p className="max-w-xl text-base leading-8 text-[var(--muted-text)] md:text-lg">
-              I work across software engineering, machine learning, and
-              data-driven systems to build products that are performant,
-              maintainable, and ready to scale.
+              The tools I use to ship performant software — across frontend systems,
+              machine learning, and data engineering.
             </p>
           </motion.div>
 

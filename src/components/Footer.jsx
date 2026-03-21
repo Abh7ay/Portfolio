@@ -26,7 +26,7 @@ const Footer = ({ standalone = false }) => {
         >
           LET&apos;S BUILD
           <br />
-          <span className="opacity-70">SOMETHING REAL</span>
+          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] bg-clip-text text-transparent">SOMETHING THAT MATTERS</span>
         </motion.h2>
 
         <div className="mb-24 grid w-full grid-cols-1 items-start gap-16 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
@@ -112,44 +112,47 @@ const Footer = ({ standalone = false }) => {
             <div className="flex flex-col gap-6">
               <div>
                 <div className="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-white/62">
-                  Current Focus
+                  Why Work With Me
                 </div>
                 <h3 className="mb-4 text-3xl leading-none md:text-4xl">
-                  Scalable platforms, real-time systems, and AI-assisted product
-                  experiences.
+                  I ship software that performs, scales, and lasts.
                 </h3>
                 <p className="text-base leading-8 text-white/80 md:text-lg">
-                  Building scalable esports platforms and exploring real-time
-                  systems using modern frontend technologies and AI integrations.
+                  You get an engineer who understands both the technical depth and the product thinking needed to build things that matter.
                 </p>
               </div>
 
               <div className="grid gap-4 pt-2 sm:grid-cols-2">
                 <div className="rounded-[1.5rem] border border-white/15 bg-[rgba(255,255,255,0.08)] p-5 backdrop-blur-md">
                   <div className="mb-2 text-sm uppercase tracking-[0.24em] text-white/60">
-                    Focus Areas
+                    What I Deliver
                   </div>
                   <div className="text-lg font-medium">
-                    Full stack products, AI systems, and high-performance UI
+                    Scalable architecture, clean code, and production-grade UI
                   </div>
                 </div>
                 <div className="rounded-[1.5rem] border border-white/15 bg-[rgba(255,255,255,0.08)] p-5 backdrop-blur-md">
                   <div className="mb-2 text-sm uppercase tracking-[0.24em] text-white/60">
-                    Engineering Style
+                    How I Work
                   </div>
                   <div className="text-lg font-medium">
-                    Clean architecture, scalability, and user-centric execution
+                    Fast iteration, clear communication, and measurable results
                   </div>
                 </div>
               </div>
 
               <a
                 href="mailto:abhay00991@gmail.com"
-                className="group mt-4 flex w-full items-center justify-center gap-3 rounded-xl bg-white py-4 text-lg font-bold text-[var(--color-primary)] transition-colors hover:bg-black hover:text-white"
+                className="group mt-4 flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] py-4 text-lg font-bold text-white shadow-[0_4px_24px_rgba(122,63,145,0.3)] transition-all hover:shadow-[0_6px_32px_rgba(122,63,145,0.5)] hover:scale-[1.02]"
               >
-                EMAIL ME
+                GET IN TOUCH
                 <ArrowUpRight className="transition-transform group-hover:rotate-45" />
               </a>
+
+              <div className="mt-4 flex items-center justify-center gap-2 text-sm text-white/60">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+                Currently open to opportunities
+              </div>
             </div>
           </motion.div>
         </div>

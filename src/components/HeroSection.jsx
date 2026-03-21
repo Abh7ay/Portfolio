@@ -1,42 +1,60 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
-const highlights = [
-  'Scalable web applications',
-  'AI-driven product systems',
-  'Responsive high-performance UI',
-];
+const headlineWords = ['Software', 'that', 'ships.'];
+const headlineWords2 = ['Systems', 'that', 'scale.'];
 
-const landingLinks = [
-  {
-    href: '#/skills',
-    label: 'Skills',
-    description: 'Tech stack across full stack engineering, ML, and data tools.',
-  },
-  {
-    href: '#/about',
-    label: 'About',
-    description: 'Experience, achievements, education, and current engineering focus.',
-  },
-  {
-    href: '#/projects',
-    label: 'Projects',
-    description: 'EsportsVerse, Nestle@, Gemini Clone, and ML-based builds.',
-  },
-  {
-    href: '#/contact',
-    label: 'Contact',
-    description: 'Reach out for collaboration, product work, or engineering roles.',
-  },
-];
+const charVariants = {
+  hidden: { opacity: 0, y: 40, filter: 'blur(6px)' },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: {
+      delay: 0.12 + i * 0.045,
+      duration: 0.55,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
+function SplitTextReveal({ words, startIndex = 0, className = '' }) {
+  let charCount = startIndex;
+  return (
+    <span className={className}>
+      {words.map((word, wordIdx) => (
+        <span key={wordIdx} className="inline-block mr-[0.28em]">
+          {word.split('').map((char) => {
+            const i = charCount++;
+            return (
+              <motion.span
+                key={i}
+                custom={i}
+                variants={charVariants}
+                initial="hidden"
+                animate="visible"
+                className="inline-block"
+              >
+                {char}
+              </motion.span>
+            );
+          })}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 export default function HeroSection({ sectionRef, heroCard = null }) {
+  const totalCharsLine1 = headlineWords.join('').length;
+
   return (
     <section
       ref={sectionRef}
       id="home"
       className="relative isolate flex min-h-screen w-full items-center overflow-hidden bg-[var(--hero-bg)] text-[var(--hero-text)]"
     >
+      {/* Animated gradient mesh background */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
@@ -44,82 +62,119 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
             'radial-gradient(circle at 18% 14%, var(--hero-glow-a), transparent 28%), radial-gradient(circle at 76% 18%, var(--hero-glow-b), transparent 30%), radial-gradient(circle at 70% 70%, var(--hero-glow-c), transparent 24%), linear-gradient(180deg, rgba(255,255,255,0.03), transparent 42%)',
         }}
       />
+      {/* Animated gradient orb — signature visual */}
+      <div className="hero-orb pointer-events-none absolute top-[8%] right-[6%] h-[420px] w-[420px] rounded-full opacity-40 blur-[100px]" />
+      <div className="hero-orb-secondary pointer-events-none absolute bottom-[12%] left-[4%] h-[320px] w-[320px] rounded-full opacity-30 blur-[90px]" />
+
+      {/* Grid overlay */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.08]"
+        className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage:
             'linear-gradient(var(--hero-grid) 1px, transparent 1px), linear-gradient(90deg, var(--hero-grid) 1px, transparent 1px)',
           backgroundSize: 'clamp(34px,4vw,48px) clamp(34px,4vw,48px)',
         }}
       />
-      <div className="pointer-events-none absolute top-[12%] left-[8%] h-44 w-44 rounded-full bg-[var(--hero-glow-a)] blur-3xl" />
-      <div className="pointer-events-none absolute right-[12%] bottom-[12%] h-56 w-56 rounded-full bg-[var(--hero-glow-b)] blur-3xl" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[var(--hero-topline)]" />
       {heroCard}
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-col px-4 pb-18 pt-28 sm:px-8 md:px-12 lg:pb-20 lg:pt-32">
-        <div className="relative z-10 grid min-h-[72vh] items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,26rem)_minmax(0,1fr)] lg:items-center lg:gap-12">
+        <div className="relative z-10 grid min-h-[72vh] items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,26rem)_minmax(0,1fr)] lg:items-center lg:gap-14">
+          {/* Left — Main hero content */}
           <motion.div
-            initial={{ opacity: 0, x: -32 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.85, delay: 0.05 }}
-            className="flex flex-col gap-7 self-start pt-4 lg:self-center lg:pt-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="flex flex-col gap-8 self-start pt-4 lg:self-center lg:pt-0"
           >
-            <div className="space-y-5">
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="text-2xl font-semibold tracking-tight sm:text-3xl">
-                  Abhishek Mathur
-                </div>
-                <div className="rounded-full border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.28em] text-[var(--color-primary)] sm:text-xs">
-                  Full Stack &amp; AI Developer
-                </div>
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              className="flex flex-wrap items-center gap-3"
+            >
+              <div className="flex items-center gap-2 rounded-full border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.28em] text-[var(--color-primary)] backdrop-blur-sm sm:text-xs">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+                Available for Opportunities
               </div>
-              <p className="max-w-md text-sm leading-7 text-[var(--hero-muted)] sm:text-base">
-                Building modern web applications and intelligent systems with a
-                strong focus on clean architecture, performance, and scalable
-                engineering.
-              </p>
+            </motion.div>
+
+            {/* Headline — split text reveal */}
+            <div className="space-y-1">
+              <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-antonio leading-[0.92] tracking-tight">
+                <SplitTextReveal words={headlineWords} startIndex={0} />
+                <br />
+                <SplitTextReveal
+                  words={headlineWords2}
+                  startIndex={totalCharsLine1}
+                  className="text-[var(--color-primary)]"
+                />
+              </h1>
             </div>
 
-            <div className="flex flex-wrap gap-4 pt-1">
+            {/* Positioning subtext */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="max-w-lg text-base leading-8 text-[var(--hero-muted)] sm:text-lg"
+            >
+              Full stack engineering at the intersection of{' '}
+              <span className="text-[var(--hero-text)] font-medium">performance</span>,{' '}
+              <span className="text-[var(--hero-text)] font-medium">design</span>, and{' '}
+              <span className="text-[var(--hero-text)] font-medium">intelligence</span>.
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.85 }}
+              className="flex flex-wrap gap-4 pt-2"
+            >
               <a
                 href="#/projects"
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--hero-text)] px-7 py-3 text-sm font-semibold text-[var(--hero-bg)] transition-transform hover:scale-[1.03]"
+                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] px-8 py-3.5 text-sm font-semibold text-white shadow-[0_4px_24px_rgba(122,63,145,0.3)] transition-all hover:scale-[1.04] hover:shadow-[0_6px_32px_rgba(122,63,145,0.45)]"
               >
-                View Projects
-                <ArrowRight size={16} />
+                See My Work
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </a>
               <a
                 href="#/contact"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--hero-border)] px-7 py-3 text-sm font-semibold text-[var(--hero-text)] transition-colors hover:bg-[var(--hero-text)] hover:text-[var(--hero-bg)]"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] px-8 py-3.5 text-sm font-semibold text-[var(--hero-text)] backdrop-blur-sm transition-all hover:bg-[var(--hero-text)] hover:text-[var(--hero-bg)]"
               >
-                Contact Me
+                Let's Talk
                 <ArrowUpRight size={16} />
               </a>
-            </div>
+            </motion.div>
 
-            <div className="grid gap-3 pt-2 sm:max-w-xl">
-              {highlights.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-3 rounded-[1.2rem] border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] px-4 py-3 text-sm text-[var(--hero-muted)] backdrop-blur-sm"
-                >
-                  <span className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
-                  {item}
-                </div>
-              ))}
-            </div>
+            {/* Specialization line */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
+              className="flex items-center gap-4 pt-2 text-[11px] uppercase tracking-[0.28em] text-[var(--hero-soft)]"
+            >
+              <span>Frontend Systems</span>
+              <span className="h-1 w-1 rounded-full bg-[var(--color-primary)]" />
+              <span>Intelligent Interfaces</span>
+              <span className="h-1 w-1 rounded-full bg-[var(--color-primary)]" />
+              <span>Performance</span>
+            </motion.div>
           </motion.div>
 
+          {/* Center — ProfileShowcaseCard placeholder */}
           <div
             aria-hidden="true"
             className="mx-auto h-[clamp(20rem,52vw,32rem)] w-[min(74vw,26rem)] shrink-0 lg:h-[32rem] lg:w-[26rem]"
           />
 
+          {/* Right — Stats & focus */}
           <motion.div
             initial={{ opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.85, delay: 0.16 }}
+            transition={{ duration: 0.85, delay: 0.4 }}
             className="flex flex-col items-start gap-5 self-end pb-3 text-left lg:max-w-sm lg:justify-self-end lg:items-stretch lg:self-center lg:pb-0"
           >
             <div className="rounded-[1.7rem] border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] p-6 backdrop-blur-md">
@@ -162,39 +217,12 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
           </motion.div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.36 }}
-          className="relative z-10 mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
-        >
-          {landingLinks.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="group rounded-[1.5rem] border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:bg-[var(--hero-panel-strong)]"
-            >
-              <div className="mb-8 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-[0.26em] text-[var(--hero-soft)]">
-                  {item.label}
-                </span>
-                <ArrowUpRight
-                  size={18}
-                  className="text-[var(--hero-muted)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                />
-              </div>
-              <p className="max-w-[18rem] text-sm leading-7 text-[var(--hero-muted)]">
-                {item.description}
-              </p>
-            </a>
-          ))}
-        </motion.div>
-
+        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.45 }}
-          className="relative z-10 mt-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-[var(--hero-soft)] sm:text-xs"
+          transition={{ duration: 0.7, delay: 1.1 }}
+          className="relative z-10 mt-12 flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-[var(--hero-soft)] sm:text-xs"
         >
           <span className="h-px w-16 bg-[var(--hero-border)]" />
           Scroll to explore

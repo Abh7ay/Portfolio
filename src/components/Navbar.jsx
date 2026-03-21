@@ -1,6 +1,40 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
+
+function MagneticButton({ children, href, className }) {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 200, damping: 20 });
+  const springY = useSpring(y, { stiffness: 200, damping: 20 });
+
+  function handleMouseMove(e) {
+    const rect = ref.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    x.set((e.clientX - cx) * 0.25);
+    y.set((e.clientY - cy) * 0.25);
+  }
+
+  function handleMouseLeave() {
+    x.set(0);
+    y.set(0);
+  }
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      style={{ x: springX, y: springY }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={className}
+    >
+      {children}
+    </motion.a>
+  );
+}
 
 const Navbar = ({ toggleTheme, currentRoute }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -51,12 +85,12 @@ const Navbar = ({ toggleTheme, currentRoute }) => {
             >
               <div className="h-5 w-5 rounded-full bg-[var(--color-primary)] opacity-80" />
             </button>
-            <a
+            <MagneticButton
               href="#/contact"
-              className="hidden rounded-full bg-[var(--text-color)] px-6 py-2.5 text-sm font-medium text-[var(--bg-color)] transition-transform hover:scale-105 sm:block"
+              className="hidden rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] px-6 py-2.5 text-sm font-medium text-white shadow-[0_2px_12px_rgba(122,63,145,0.25)] transition-shadow hover:shadow-[0_4px_20px_rgba(122,63,145,0.4)] sm:block"
             >
               Contact
-            </a>
+            </MagneticButton>
             <button
               className="p-2 md:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -87,7 +121,7 @@ const Navbar = ({ toggleTheme, currentRoute }) => {
             ))}
             <a
               href="#/contact"
-              className="mt-2 rounded-xl bg-[var(--text-color)] px-4 py-3 text-center text-sm font-medium text-[var(--bg-color)]"
+              className="mt-2 rounded-xl bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] px-4 py-3 text-center text-sm font-medium text-white"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Contact
