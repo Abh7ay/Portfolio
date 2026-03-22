@@ -1,312 +1,307 @@
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ExternalLink, Github } from 'lucide-react';
 
+/* ── Case study data ── */
 const caseStudies = [
   {
     number: '01',
     title: 'EsportsVerse',
     label: 'Full Stack Platform',
     liveUrl: 'https://esports-verse.in',
+    repoUrl: 'https://github.com/Abh7ay/EsportsVerse',
+    image: 'https://opengraph.githubassets.com/1/Abh7ay/EsportsVerse',
     problem:
-      'The Indian esports community lacked a unified, high-performance content platform — scattered information across social media with no structured experience for teams, updates, or highlights.',
+      'The Indian esports community had no unified platform — content was fragmented across social media, with no structured way for teams, tournaments, and updates to be discovered.',
     solution:
-      'Engineered a modular React-based platform with structured content architecture, component-driven UI, and optimized build pipeline delivering sub-2s page loads.',
+      'Engineered a modular, component-driven React platform with structured content architecture, route-level code splitting, and an optimized Vite build pipeline delivering sub-2s initial loads.',
+    features: [
+      'Component library with 12+ reusable UI primitives',
+      'Route-based code splitting for lazy-loaded pages',
+      'Responsive layout system across 5 breakpoints',
+      'SEO-optimized metadata and semantic markup',
+    ],
     impact: [
-      { value: '<2s', label: 'Page Load Time' },
-      { value: '12+', label: 'Reusable Components' },
-      { value: '5', label: 'Responsive Breakpoints' },
+      { value: '<2s', label: 'Load Time' },
+      { value: '12+', label: 'Components' },
+      { value: '95+', label: 'Lighthouse' },
     ],
     stack: ['React.js', 'Vite', 'Tailwind CSS', 'JavaScript'],
-    theme:
-      'bg-[linear-gradient(135deg,#2B0D3E_0%,#53246A_42%,#7A3F91_100%)]',
   },
   {
     number: '02',
     title: 'Nestle@',
     label: 'Frontend Engineering',
     liveUrl: 'https://nestle-at.vercel.app',
+    repoUrl: null,
+    image: 'https://opengraph.githubassets.com/1/Abh7ay/Nestle',
     problem:
-      'Needed a production-ready frontend interface demonstrating advanced responsive design patterns, lightweight tooling, and fast iteration — no framework overhead.',
+      'Needed a production-grade frontend demonstrating advanced responsive patterns and peak performance — without the overhead of a full framework like Next.js or Gatsby.',
     solution:
-      'Built a high-performance, zero-framework interface using Vite and Tailwind CSS with a clean component system, achieving top Lighthouse scores across mobile and desktop.',
+      'Built a zero-framework, high-performance interface using Vite and Tailwind CSS with a clean component system, achieving top Lighthouse scores and instant deployability on Vercel.',
+    features: [
+      'Zero framework overhead — pure Vite + vanilla JS',
+      'Optimized asset pipeline with image compression',
+      'CSS architecture using Tailwind utility-first patterns',
+      'Fully responsive across all device categories',
+    ],
     impact: [
-      { value: '95+', label: 'Lighthouse Score' },
+      { value: '95+', label: 'Lighthouse' },
       { value: '0', label: 'Framework Overhead' },
-      { value: '100%', label: 'Mobile Responsive' },
+      { value: '100%', label: 'Responsive' },
     ],
     stack: ['Vite', 'Tailwind CSS', 'JavaScript'],
-    theme:
-      'bg-[linear-gradient(135deg,#3A174E_0%,#7A3F91_52%,#C59DD9_145%)]',
   },
-];
-
-const supportingProjects = [
   {
+    number: '03',
     title: 'Sign Language Detector',
-    description:
-      'Real-time hand gesture recognition system using computer vision and machine learning to interpret sign language — from data collection to live prediction.',
-    contributions: [
-      'Designed the end-to-end ML pipeline from data collection through training',
-      'Implemented feature extraction for gesture classification',
-      'Built a real-time prediction workflow with live camera feed',
-    ],
-    stack: 'Python • OpenCV • TensorFlow',
+    label: 'Machine Learning',
+    liveUrl: null,
     repoUrl: 'https://github.com/Abh7ay/Sign-Language-Detector-',
     image: 'https://opengraph.githubassets.com/1/Abh7ay/Sign-Language-Detector-',
+    problem:
+      'Bridging accessibility gaps for hearing-impaired users — no lightweight, real-time solution existed for interpreting hand gestures via standard webcam hardware.',
+    solution:
+      'Built an end-to-end ML pipeline from data collection through model training, implementing real-time hand gesture recognition using OpenCV for video processing and TensorFlow for classification.',
+    features: [
+      'End-to-end pipeline: data collection → training → inference',
+      'Feature extraction and classification for gesture types',
+      'Real-time prediction with live camera feed',
+      'Modular architecture for adding new gesture classes',
+    ],
+    impact: [
+      { value: 'Real-time', label: 'Inference' },
+      { value: 'Custom', label: 'ML Pipeline' },
+      { value: 'Webcam', label: 'Input Source' },
+    ],
+    stack: ['Python', 'OpenCV', 'TensorFlow', 'MediaPipe'],
   },
   {
+    number: '04',
     title: 'Gemini Clone',
-    description:
-      'Conversational AI interface replicating modern chat-based systems with dynamic rendering, conversation state management, and responsive design.',
-    contributions: [
-      'Developed a fully responsive chat interface with real-time rendering',
-      'Implemented conversation history management and state persistence',
-      'Designed modular architecture for extensibility',
-    ],
-    stack: 'React.js • JavaScript',
+    label: 'AI Interface',
+    liveUrl: null,
     repoUrl: 'https://github.com/Abh7ay/Gemini_Clone',
     image: 'https://opengraph.githubassets.com/1/Abh7ay/Gemini_Clone',
+    problem:
+      'Modern conversational AI interfaces require sophisticated state management, real-time rendering, and responsive design — duplicating this UX from scratch demanded deliberate architecture.',
+    solution:
+      'Developed a fully functional chat interface with dynamic message rendering, conversation state management, and a modular component system designed for extensibility.',
+    features: [
+      'Dynamic message rendering with streaming support',
+      'Conversation history and state persistence',
+      'Responsive design across mobile and desktop',
+      'Modular component architecture for feature extension',
+    ],
+    impact: [
+      { value: 'Full', label: 'Chat UX' },
+      { value: 'Modular', label: 'Architecture' },
+      { value: '100%', label: 'Responsive' },
+    ],
+    stack: ['React.js', 'JavaScript', 'CSS'],
   },
 ];
 
-const sectionReveal = {
-  hidden: { opacity: 0, y: 50 },
-  visible: (i = 0) => ({
+/* ── Scroll reveal variants ── */
+const fadeSlide = {
+  hidden: { opacity: 0, y: 60 },
+  visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] },
-  }),
+    transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+  },
 };
 
 const ProjectsSection = () => {
   return (
     <section
       id="projects"
-      className="mx-auto max-w-7xl border-t border-[var(--border-color)] px-4 py-24 sm:px-8 md:px-12"
+      className="mx-auto max-w-7xl border-t border-[var(--border-color)] px-4 py-28 sm:px-8 md:px-12"
     >
+      {/* ── Section header ── */}
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        variants={sectionReveal}
-        className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end"
+        variants={fadeSlide}
+        className="mb-20"
       >
-        <div>
-          <div className="mb-4 text-[11px] font-medium uppercase tracking-[0.3em] text-[var(--color-primary)]">
-            Case Studies
-          </div>
-          <h2 className="mb-4 text-4xl md:text-5xl">Engineering That Solves Real Problems</h2>
-          <p className="max-w-2xl text-[var(--muted-text)] md:text-lg">
-            Each project represents a real challenge — from architecture decisions to
-            performance trade-offs. Here's how I approached them.
-          </p>
+        <div className="mb-4 text-[11px] font-medium uppercase tracking-[0.3em] text-[var(--color-primary)]">
+          Selected Work
         </div>
-        <a
-          href="https://github.com/Abh7ay?tab=repositories"
-          target="_blank"
-          rel="noreferrer"
-          className="hidden items-center gap-2 rounded-full border border-[var(--border-color)] px-6 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] md:flex"
-        >
-          View GitHub
-          <ArrowUpRight size={16} />
-        </a>
+        <h2 className="mb-5 text-4xl md:text-5xl">Projects I Work On</h2>
+        <p className="max-w-2xl text-base leading-8 text-[var(--muted-text)] md:text-lg">
+          A selection of projects focused on performance, scalability, and
+          real-world problem solving. Each one represents a genuine engineering
+          challenge — not just UI.
+        </p>
       </motion.div>
 
-      {/* Featured Case Studies */}
-      <div className="space-y-10">
-        {caseStudies.map((project, index) => (
-          <motion.div
-            key={project.title}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            variants={sectionReveal}
-            custom={index * 0.08}
-            className={`overflow-hidden rounded-[2rem] p-8 text-white md:p-10 ${project.theme}`}
-          >
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-              {/* Left — Story */}
-              <div className="flex flex-col gap-6">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="font-antonio text-6xl leading-none text-white/20 md:text-7xl">
-                    {project.number}
-                  </span>
-                  <div className="flex flex-col gap-1">
-                    <span className="rounded-full border border-white/16 bg-white/10 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.26em]">
+      {/* ── Case studies — alternating layout ── */}
+      <div className="space-y-24">
+        {caseStudies.map((project, index) => {
+          const isReversed = index % 2 !== 0;
+          return (
+            <motion.div
+              key={project.title}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-100px' }}
+              variants={fadeSlide}
+              className="group"
+            >
+              <div
+                className={`grid items-center gap-12 lg:grid-cols-2 lg:gap-16 ${
+                  isReversed ? 'lg:[direction:rtl]' : ''
+                }`}
+              >
+                {/* ── Image side ── */}
+                <div className={`${isReversed ? 'lg:[direction:ltr]' : ''}`}>
+                  <div className="relative overflow-hidden rounded-[1.8rem] shadow-2xl shadow-black/10 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02] group-hover:rotate-[0.5deg]">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="aspect-[16/10] w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    {/* Number overlay */}
+                    <div className="absolute left-6 bottom-6 font-antonio text-7xl leading-none text-white/15 md:text-8xl">
+                      {project.number}
+                    </div>
+                  </div>
+                </div>
+
+                {/* ── Content side ── */}
+                <div className={`flex flex-col gap-6 ${isReversed ? 'lg:[direction:ltr]' : ''}`}>
+                  {/* Header */}
+                  <div>
+                    <div className="mb-3 inline-block rounded-full border border-[var(--border-color)] bg-[var(--glass-bg)] px-4 py-1.5 text-[10px] font-medium uppercase tracking-[0.26em] text-[var(--color-primary)] backdrop-blur-sm">
                       {project.label}
-                    </span>
+                    </div>
+                    <h3 className="text-3xl md:text-4xl">{project.title}</h3>
                   </div>
-                </div>
 
-                <div>
-                  <h3 className="text-4xl md:text-5xl">{project.title}</h3>
-                </div>
-
-                {/* Problem */}
-                <div>
-                  <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.24em] text-white/50">
-                    The Problem
+                  {/* Problem */}
+                  <div>
+                    <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.24em] text-[var(--color-primary)]">
+                      Problem
+                    </div>
+                    <p className="text-base leading-8 text-[var(--muted-text)]">
+                      {project.problem}
+                    </p>
                   </div>
-                  <p className="max-w-xl text-base leading-8 text-white/82">
-                    {project.problem}
-                  </p>
-                </div>
 
-                {/* Solution */}
-                <div>
-                  <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.24em] text-white/50">
-                    My Solution
+                  {/* Solution */}
+                  <div>
+                    <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.24em] text-[var(--color-primary)]">
+                      Solution
+                    </div>
+                    <p className="text-base leading-8 text-[var(--muted-text)]">
+                      {project.solution}
+                    </p>
                   </div>
-                  <p className="max-w-xl text-base leading-8 text-white/82">
-                    {project.solution}
-                  </p>
-                </div>
 
-                {project.liveUrl ? (
-                  <div className="flex flex-wrap gap-3">
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition-all hover:scale-[1.03] hover:shadow-lg"
-                    >
-                      View Live
-                      <ArrowUpRight size={16} />
-                    </a>
+                  {/* Key features */}
+                  <div>
+                    <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.24em] text-[var(--color-primary)]">
+                      Key Features
+                    </div>
+                    <ul className="space-y-2">
+                      {project.features.map((f) => (
+                        <li
+                          key={f}
+                          className="flex items-start gap-3 text-sm leading-7 text-[var(--muted-text)]"
+                        >
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-primary)]" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                ) : null}
-              </div>
 
-              {/* Right — Impact + Stack */}
-              <div className="flex flex-col gap-8">
-                {/* Impact metrics */}
-                <div>
-                  <div className="mb-4 text-[11px] font-medium uppercase tracking-[0.24em] text-white/50">
-                    Measurable Impact
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    {project.impact.map((metric) => (
+                  {/* Impact metrics */}
+                  <div className="grid grid-cols-3 gap-3">
+                    {project.impact.map((m) => (
                       <div
-                        key={metric.label}
-                        className="rounded-[1.25rem] border border-white/12 bg-white/8 p-4 text-center backdrop-blur-sm"
+                        key={m.label}
+                        className="rounded-[1.1rem] border border-[var(--border-color)] bg-[var(--glass-bg)] p-3.5 text-center backdrop-blur-sm"
                       >
-                        <div className="text-2xl font-antonio text-white md:text-3xl">
-                          {metric.value}
+                        <div className="text-xl font-antonio text-[var(--color-primary)] md:text-2xl">
+                          {m.value}
                         </div>
-                        <div className="mt-2 text-[11px] uppercase tracking-[0.2em] text-white/60">
-                          {metric.label}
+                        <div className="mt-1 text-[10px] uppercase tracking-[0.18em] text-[var(--muted-text)]">
+                          {m.label}
                         </div>
                       </div>
                     ))}
                   </div>
-                </div>
 
-                {/* Tech stack */}
-                <div>
-                  <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.24em] text-white/50">
-                    Tech Stack
-                  </div>
-                  <div className="flex flex-wrap gap-3">
+                  {/* Tech stack */}
+                  <div className="flex flex-wrap gap-2">
                     {project.stack.map((tech) => (
                       <span
                         key={tech}
-                        className="rounded-full border border-white/14 bg-black/14 px-4 py-2 text-sm"
+                        className="rounded-full border border-[var(--border-color)] px-3.5 py-1.5 text-xs font-medium text-[var(--muted-text)]"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
+
+                  {/* CTAs */}
+                  <div className="flex flex-wrap items-center gap-3 pt-2">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="group/btn inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_4px_20px_rgba(122,63,145,0.3)] transition-all hover:scale-[1.03] hover:shadow-[0_6px_28px_rgba(122,63,145,0.45)]"
+                      >
+                        View Live
+                        <ExternalLink size={14} className="transition-transform group-hover/btn:translate-x-0.5" />
+                      </a>
+                    )}
+                    {project.repoUrl && (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full border border-[var(--border-color)] px-6 py-2.5 text-sm font-medium text-[var(--muted-text)] transition-all hover:border-[var(--text-color)] hover:text-[var(--text-color)]"
+                      >
+                        View Code
+                        <Github size={14} />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
+
+              {/* Divider between projects */}
+              {index < caseStudies.length - 1 && (
+                <div className="mx-auto mt-24 h-px w-24 bg-[var(--border-color)]" />
+              )}
+            </motion.div>
+          );
+        })}
       </div>
 
-      {/* Supporting Projects */}
+      {/* ── View all on GitHub ── */}
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        variants={sectionReveal}
-        className="mt-20 mb-10"
+        variants={fadeSlide}
+        className="mt-24 flex justify-center"
       >
-        <div className="mb-4 text-[11px] font-medium uppercase tracking-[0.3em] text-[var(--color-primary)]">
-          More Projects
-        </div>
-        <h3 className="text-3xl md:text-4xl">Supporting Builds</h3>
+        <a
+          href="https://github.com/Abh7ay?tab=repositories"
+          target="_blank"
+          rel="noreferrer"
+          className="group inline-flex items-center gap-3 rounded-full border border-[var(--border-color)] px-8 py-3.5 text-sm font-medium transition-all hover:bg-[var(--text-color)] hover:text-[var(--bg-color)]"
+        >
+          View All on GitHub
+          <ArrowUpRight size={16} className="transition-transform group-hover:rotate-45" />
+        </a>
       </motion.div>
-
-      <div className="grid gap-8 lg:grid-cols-2">
-        {supportingProjects.map((project, index) => (
-          <motion.a
-            key={project.title}
-            href={project.repoUrl}
-            target="_blank"
-            rel="noreferrer"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            variants={sectionReveal}
-            custom={index * 0.08}
-            className="group overflow-hidden rounded-[2rem] border border-[var(--border-color)] bg-[var(--card-bg)]"
-          >
-            <div className="relative h-64 overflow-hidden">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/20 to-transparent" />
-              <div className="absolute right-5 top-5 flex h-12 w-12 items-center justify-center rounded-full bg-white text-black shadow-lg transition-transform duration-500 group-hover:rotate-45">
-                <ArrowUpRight size={22} />
-              </div>
-              <div className="absolute right-5 bottom-5 left-5 text-white">
-                <div className="text-[11px] uppercase tracking-[0.24em] text-white/62">
-                  GitHub Project
-                </div>
-                <div className="mt-2 text-3xl">{project.title}</div>
-              </div>
-            </div>
-
-            <div className="space-y-6 p-6 md:p-8">
-              <p className="text-[var(--muted-text)] leading-7">
-                {project.description}
-              </p>
-
-              <div>
-                <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.24em] text-[var(--color-primary)]">
-                  Key Contributions
-                </div>
-                <div className="space-y-3 text-sm leading-7 text-[var(--muted-text)]">
-                  {project.contributions.map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-[1.1rem] border border-[var(--border-color)] px-4 py-3"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-[var(--border-color)] pt-5 text-sm font-medium text-[var(--muted-text)]">
-                {project.stack}
-              </div>
-            </div>
-          </motion.a>
-        ))}
-      </div>
-
-      <a
-        href="https://github.com/Abh7ay?tab=repositories"
-        target="_blank"
-        rel="noreferrer"
-        className="mt-10 flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--border-color)] px-6 py-4 text-sm font-bold transition-colors hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] md:hidden"
-      >
-        VIEW GITHUB
-        <ArrowUpRight size={18} />
-      </a>
     </section>
   );
 };

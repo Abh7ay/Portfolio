@@ -87,7 +87,7 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
             {/* Headline — mt-6 from badge */}
             <motion.h1
               {...fadeUp(0.15)}
-              className="mt-6 text-[2rem] font-semibold font-antonio leading-[1.08] tracking-tight md:text-[2.75rem] lg:text-[3.5rem]"
+              className="mt-6 text-4xl font-semibold font-antonio leading-[1.15] tracking-tight md:text-5xl lg:text-6xl"
             >
               I{' '}
               <span className="bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] bg-clip-text text-transparent">
@@ -132,7 +132,7 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
             {/* Trust strip — mt-6 from CTAs */}
             <motion.div
               {...fadeUp(0.65)}
-              className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm tracking-wide text-[var(--hero-soft)]"
+              className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm tracking-wide text-gray-400 dark:text-gray-500"
             >
               {trustTags.map((tag, idx) => (
                 <span key={tag} className="flex items-center gap-3">
@@ -158,6 +158,12 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
             style={{ y: rightY, scale: rightScale, rotateZ: rightRotate }}
             className="flex flex-col items-start gap-5 self-end pb-3 text-left lg:max-w-sm lg:justify-self-end lg:items-stretch lg:self-center lg:pb-0"
           >
+            {/* Floating wrapper */}
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              className="flex w-full flex-col gap-5"
+            >
             {/* Glow behind cards */}
             <div className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-[var(--hero-glow-c)] opacity-20 blur-3xl" />
 
@@ -200,6 +206,7 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
                 </div>
               </div>
             </div>
+            </motion.div>
           </motion.div>
         </div>
 
