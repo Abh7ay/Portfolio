@@ -48,10 +48,10 @@ const ServicesSection = ({ sectionRef, slotRef, slotContent = null }) => {
     <section
       ref={sectionRef}
       id="skills"
-      className="mx-auto max-w-7xl px-4 py-24 sm:px-8 md:px-12"
+      className="mx-auto max-w-7xl px-4 py-18 sm:px-8 sm:py-24 md:px-12"
     >
-      <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-2 lg:gap-24">
-        <div className="flex flex-col gap-10">
+      <div className="grid grid-cols-1 items-start gap-12 sm:gap-16 lg:grid-cols-2 lg:gap-24">
+        <div className="flex flex-col gap-8 sm:gap-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -63,8 +63,8 @@ const ServicesSection = ({ sectionRef, slotRef, slotContent = null }) => {
               <span className="text-sm font-semibold tracking-wide">CORE SKILLS</span>
             </div>
 
-            <h2 className="mb-6 text-4xl md:text-5xl">Engineering Toolkit</h2>
-            <p className="max-w-xl text-base leading-8 text-[var(--muted-text)] md:text-lg">
+            <h2 className="mb-6 text-3xl sm:text-4xl md:text-5xl">Engineering Toolkit</h2>
+            <p className="max-w-xl text-sm leading-7 text-[var(--muted-text)] sm:text-base sm:leading-8 md:text-lg">
               The tools I use to ship performant software — across frontend systems,
               machine learning, and data engineering.
             </p>
@@ -84,10 +84,10 @@ const ServicesSection = ({ sectionRef, slotRef, slotContent = null }) => {
                 >
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="group flex w-full items-center justify-between py-6 text-left transition-colors hover:text-[var(--text-color)]"
+                    className="group flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:text-[var(--text-color)] sm:py-6"
                   >
                     <h3
-                      className={`font-antonio text-3xl tracking-tight md:text-4xl ${
+                      className={`font-antonio text-2xl tracking-tight sm:text-3xl md:text-4xl ${
                         isOpen ? 'text-[var(--color-primary)]' : 'text-[var(--text-color)]'
                       }`}
                     >
@@ -96,7 +96,7 @@ const ServicesSection = ({ sectionRef, slotRef, slotContent = null }) => {
 
                     <motion.div
                       animate={{ rotate: isOpen ? 180 : 0 }}
-                      className={`flex h-10 w-10 items-center justify-center rounded-full border transition-colors ${
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors sm:h-10 sm:w-10 ${
                         isOpen
                           ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-white'
                           : 'border-[var(--border-color)] group-hover:bg-[var(--text-color)] group-hover:text-[var(--bg-color)]'
@@ -113,16 +113,16 @@ const ServicesSection = ({ sectionRef, slotRef, slotContent = null }) => {
                       opacity: isOpen ? 1 : 0,
                     }}
                     transition={{ duration: 0.3 }}
-                    className="px-0 pb-6 sm:px-2"
+                    className="px-0 pb-5 sm:px-2 sm:pb-6"
                   >
-                    <p className="mb-6 max-w-2xl text-[var(--muted-text)] leading-7">
+                    <p className="mb-5 max-w-2xl text-sm leading-7 text-[var(--muted-text)] sm:mb-6 sm:text-base">
                       {group.description}
                     </p>
                     <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {group.items.map((item) => (
                         <li
                           key={item}
-                          className="flex items-center gap-3 rounded-full border border-[var(--border-color)] px-4 py-3 text-sm"
+                          className="flex items-center gap-3 rounded-xl border border-[var(--border-color)] px-4 py-3 text-sm"
                         >
                           <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)] opacity-70" />
                           {item}
@@ -138,7 +138,7 @@ const ServicesSection = ({ sectionRef, slotRef, slotContent = null }) => {
 
         <div
           ref={slotRef}
-          className="relative w-full overflow-hidden rounded-[2rem] bg-transparent aspect-[4/5] lg:sticky lg:top-32"
+          className="relative mx-auto w-full max-w-[22rem] overflow-hidden rounded-[2rem] bg-transparent aspect-[4/5] lg:sticky lg:top-32 lg:max-w-none"
         >
           {slotContent ? (
             <div className="absolute inset-0 flex items-center justify-center">

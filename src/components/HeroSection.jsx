@@ -12,7 +12,7 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
 });
 
-export default function HeroSection({ sectionRef, heroCard = null }) {
+export default function HeroSection({ sectionRef, heroCard = null, centerCard = null }) {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -71,8 +71,8 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
       {heroCard}
 
       {/* ── Main content ── */}
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col px-4 py-28 sm:px-8 md:px-12 lg:py-32">
-        <div className="relative z-10 grid min-h-[72vh] items-start gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,24rem)_minmax(0,0.85fr)] lg:items-center lg:gap-12">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-col px-4 py-20 sm:px-8 sm:py-24 md:px-12 lg:py-32">
+        <div className="relative z-10 grid min-h-[72vh] items-start gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,24rem)_minmax(0,0.85fr)] lg:items-center lg:gap-12">
 
           {/* ═══ LEFT — 50-55% ═══ */}
           <div className="flex flex-col self-start pt-4 lg:self-center lg:pt-0">
@@ -87,7 +87,7 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
             {/* Headline — mt-6 from badge */}
             <motion.h1
               {...fadeUp(0.15)}
-              className="mt-6 text-4xl font-semibold font-antonio leading-[1.15] tracking-tight md:text-5xl lg:text-6xl"
+              className="mt-6 text-3xl font-semibold font-antonio leading-[1.1] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
             >
               I{' '}
               <span className="bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] bg-clip-text text-transparent">
@@ -102,7 +102,7 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
             {/* Subtext — mt-5 from headline */}
             <motion.p
               {...fadeUp(0.35)}
-              className="mt-5 max-w-lg text-lg leading-8 tracking-wide text-[var(--hero-muted)] opacity-80"
+              className="mt-5 max-w-lg text-base leading-7 tracking-wide text-[var(--hero-muted)] opacity-80 sm:text-lg sm:leading-8"
             >
               Focused on performance, scalability, and clean architecture — I build
               systems that don't just look good, but perform under real-world conditions.
@@ -111,18 +111,18 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
             {/* CTAs — mt-7 from subtext */}
             <motion.div
               {...fadeUp(0.5)}
-              className="mt-7 flex flex-wrap items-center gap-5"
+              className="mt-7 flex flex-wrap items-center gap-3 sm:gap-5"
             >
               <a
                 href="#/projects"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_4px_24px_rgba(122,63,145,0.35)] transition-all hover:scale-[1.04] hover:shadow-[0_8px_36px_rgba(122,63,145,0.5)]"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] px-6 py-3 text-sm font-semibold text-white shadow-[0_4px_24px_rgba(122,63,145,0.35)] transition-all hover:scale-[1.04] hover:shadow-[0_8px_36px_rgba(122,63,145,0.5)] sm:px-7 sm:py-3.5"
               >
                 View Work
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </a>
               <a
                 href="#/contact"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--hero-border)] px-6 py-3 text-sm font-medium text-[var(--hero-muted)] transition-all hover:border-[var(--hero-text)] hover:text-[var(--hero-text)]"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--hero-border)] px-5 py-2.5 text-sm font-medium text-[var(--hero-muted)] transition-all hover:border-[var(--hero-text)] hover:text-[var(--hero-text)] sm:px-6 sm:py-3"
               >
                 Contact Me
                 <ArrowUpRight size={15} />
@@ -147,58 +147,60 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
 
           {/* ═══ CENTER — ProfileShowcaseCard slot ═══ */}
           <motion.div
-            aria-hidden="true"
+            aria-hidden={centerCard ? undefined : true}
             style={{ x: cardX }}
-            className="mx-auto h-[clamp(20rem,52vw,32rem)] w-[min(74vw,24rem)] shrink-0 translate-x-2 translate-y-8 lg:h-[32rem] lg:w-[24rem] lg:translate-x-4 lg:translate-y-10"
-          />
+            className="mx-auto h-[clamp(17rem,60vw,30rem)] w-[min(82vw,22rem)] shrink-0 translate-y-3 sm:translate-y-6 lg:h-[32rem] lg:w-[24rem] lg:translate-x-4 lg:translate-y-10"
+          >
+            {centerCard}
+          </motion.div>
 
           {/* ═══ RIGHT — ~45% ═══ */}
           <motion.div
             {...fadeUp(0.4)}
             style={{ y: rightY, scale: rightScale, rotateZ: rightRotate }}
-            className="flex flex-col items-start gap-5 self-end pb-3 text-left lg:max-w-sm lg:justify-self-end lg:items-stretch lg:self-center lg:pb-0"
+            className="flex w-full flex-col items-start gap-4 self-end pb-2 text-left sm:gap-5 lg:max-w-sm lg:justify-self-end lg:items-stretch lg:self-center lg:pb-0"
           >
             {/* Floating wrapper */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="flex w-full flex-col gap-5"
+              className="flex w-full flex-col gap-4 sm:gap-5"
             >
             {/* Glow behind cards */}
             <div className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-[var(--hero-glow-c)] opacity-20 blur-3xl" />
 
             {/* Engineering Focus card */}
-            <div className="relative rounded-[1.7rem] border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] p-6 backdrop-blur-md transition-all duration-500 hover:scale-[1.02] hover:rotate-0">
+            <div className="relative rounded-[1.7rem] border border-[var(--hero-border)] bg-[var(--hero-panel-bg)] p-5 backdrop-blur-md transition-all duration-500 hover:scale-[1.02] hover:rotate-0 sm:p-6">
               <div className="mb-3 text-[11px] uppercase tracking-[0.28em] text-[var(--hero-soft)]">
                 Engineering Focus
               </div>
-              <div className="text-2xl leading-tight tracking-tight">
+              <div className="text-xl leading-tight tracking-tight sm:text-2xl">
                 Frontend systems, intelligent interfaces, and scalable product execution.
               </div>
-              <p className="mt-4 text-sm leading-7 text-[var(--hero-muted)]">
+              <p className="mt-4 text-sm leading-6 text-[var(--hero-muted)] sm:leading-7">
                 Focused on clean architecture, performance optimization, and
                 user-centric product thinking.
               </p>
             </div>
 
             {/* Stat cards */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative rounded-[1.5rem] border border-[var(--hero-border)] bg-[var(--hero-panel-strong)] p-5 backdrop-blur-sm transition-all duration-500 hover:scale-[1.03]">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="relative rounded-[1.5rem] border border-[var(--hero-border)] bg-[var(--hero-panel-strong)] p-4 backdrop-blur-sm transition-all duration-500 hover:scale-[1.03] sm:p-5">
                 <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--hero-soft)]">
                   Problem Solving
                 </div>
-                <div className="mt-3 text-3xl font-antonio text-[var(--color-primary)]">
+                <div className="mt-2 text-2xl font-antonio text-[var(--color-primary)] sm:mt-3 sm:text-3xl">
                   360+
                 </div>
                 <div className="mt-2 text-sm text-[var(--hero-muted)]">
                   coding problems solved
                 </div>
               </div>
-              <div className="relative rounded-[1.5rem] border border-[var(--hero-border)] bg-[var(--hero-panel-strong)] p-5 backdrop-blur-sm transition-all duration-500 hover:scale-[1.03]">
+              <div className="relative rounded-[1.5rem] border border-[var(--hero-border)] bg-[var(--hero-panel-strong)] p-4 backdrop-blur-sm transition-all duration-500 hover:scale-[1.03] sm:p-5">
                 <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--hero-soft)]">
                   Focus
                 </div>
-                <div className="mt-3 text-3xl font-antonio text-[var(--color-primary)]">
+                <div className="mt-2 text-2xl font-antonio text-[var(--color-primary)] sm:mt-3 sm:text-3xl">
                   AI
                 </div>
                 <div className="mt-2 text-sm text-[var(--hero-muted)]">
@@ -213,7 +215,7 @@ export default function HeroSection({ sectionRef, heroCard = null }) {
         {/* Scroll indicator */}
         <motion.div
           {...fadeUp(0.8)}
-          className="relative z-10 mt-16 flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-[var(--hero-soft)] sm:text-xs"
+          className="relative z-10 mt-12 flex items-center gap-3 text-[10px] uppercase tracking-[0.28em] text-[var(--hero-soft)] sm:mt-16 sm:text-xs sm:tracking-[0.32em]"
         >
           <span className="h-px w-16 bg-[var(--hero-border)]" />
           Scroll to explore

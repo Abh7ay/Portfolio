@@ -6,7 +6,7 @@ const Footer = ({ standalone = false }) => {
     <footer
       id="contact"
       className={[
-        'relative w-full overflow-hidden bg-[#09070F] pb-12 pt-32 text-white',
+        'relative w-full overflow-hidden bg-[#09070F] pb-10 pt-20 text-white sm:pb-12 sm:pt-32',
         standalone ? 'mt-0' : 'mt-24',
       ].join(' ')}
     >
@@ -22,49 +22,49 @@ const Footer = ({ standalone = false }) => {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-16 text-center text-[10vw] leading-none md:text-[8vw]"
+          className="mb-10 text-center text-[14vw] leading-none sm:mb-16 sm:text-[10vw] md:text-[8vw]"
         >
           LET&apos;S BUILD
           <br />
           <span className="bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] bg-clip-text text-transparent">SOMETHING THAT MATTERS</span>
         </motion.h2>
 
-        <div className="mb-24 grid w-full grid-cols-1 items-start gap-16 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+        <div className="mb-16 grid w-full grid-cols-1 items-start gap-10 sm:mb-24 sm:gap-16 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col gap-8"
+            className="flex flex-col gap-6 sm:gap-8"
           >
             <div>
-              <h4 className="mb-2 text-xl opacity-80">EMAIL</h4>
+              <h4 className="mb-2 text-lg opacity-80 sm:text-xl">EMAIL</h4>
               <a
                 href="mailto:abhay00991@gmail.com"
-                className="break-all text-2xl font-medium transition-all hover:underline md:text-3xl"
+                className="break-all text-xl font-medium transition-all hover:underline sm:text-2xl md:text-3xl"
               >
                 abhay00991@gmail.com
               </a>
             </div>
 
             <div>
-              <h4 className="mb-2 text-xl opacity-80">PHONE</h4>
+              <h4 className="mb-2 text-lg opacity-80 sm:text-xl">PHONE</h4>
               <a
                 href="tel:+919797485185"
-                className="text-2xl font-medium transition-all hover:underline md:text-3xl"
+                className="text-xl font-medium transition-all hover:underline sm:text-2xl md:text-3xl"
               >
                 +91 9797485185
               </a>
             </div>
 
             <div>
-              <h4 className="mb-2 text-xl opacity-80">LOCATION</h4>
-              <p className="text-2xl font-medium md:text-3xl">Delhi, India</p>
+              <h4 className="mb-2 text-lg opacity-80 sm:text-xl">LOCATION</h4>
+              <p className="text-xl font-medium sm:text-2xl md:text-3xl">Delhi, India</p>
             </div>
 
             <div>
-              <h4 className="mb-2 text-xl opacity-80">PROFILES</h4>
-              <div className="flex flex-col gap-3 text-lg font-medium md:text-2xl">
+              <h4 className="mb-2 text-lg opacity-80 sm:text-xl">PROFILES</h4>
+              <div className="flex flex-col gap-3 text-base font-medium sm:text-lg md:text-2xl">
                 <a
                   href="https://github.com/Abh7ay"
                   target="_blank"
@@ -84,17 +84,17 @@ const Footer = ({ standalone = false }) => {
               </div>
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-4">
+            <div className="mt-3 flex flex-wrap gap-3 sm:mt-4 sm:gap-4">
               <a
                 href="mailto:abhay00991@gmail.com"
-                className="flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 font-medium transition-colors hover:border-white"
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 font-medium transition-colors hover:border-white sm:w-auto"
               >
                 Contact Me
                 <ArrowUpRight size={18} />
               </a>
               <a
                 href="#/projects"
-                className="flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 font-medium transition-colors hover:border-white"
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 font-medium transition-colors hover:border-white sm:w-auto"
               >
                 View Projects
                 <ArrowUpRight size={18} />
@@ -107,17 +107,17 @@ const Footer = ({ standalone = false }) => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="rounded-[2rem] border border-white/18 bg-[linear-gradient(145deg,rgba(242,234,247,0.16),rgba(197,157,217,0.06))] p-8 shadow-[0_24px_80px_rgba(43,13,62,0.3)] backdrop-blur-xl md:p-12"
+            className="rounded-[2rem] border border-white/18 bg-[linear-gradient(145deg,rgba(242,234,247,0.16),rgba(197,157,217,0.06))] p-5 shadow-[0_24px_80px_rgba(43,13,62,0.3)] backdrop-blur-xl sm:p-8 md:p-12"
           >
             <div className="flex flex-col gap-6">
               <div>
                 <div className="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-white/62">
                   Why Work With Me
                 </div>
-                <h3 className="mb-4 text-3xl leading-none md:text-4xl">
+                <h3 className="mb-4 text-2xl leading-none sm:text-3xl md:text-4xl">
                   I ship software that performs, scales, and lasts.
                 </h3>
-                <p className="text-base leading-8 text-white/80 md:text-lg">
+                <p className="text-sm leading-7 text-white/80 sm:text-base sm:leading-8 md:text-lg">
                   You get an engineer who understands both the technical depth and the product thinking needed to build things that matter.
                 </p>
               </div>
@@ -143,7 +143,7 @@ const Footer = ({ standalone = false }) => {
 
               <a
                 href="mailto:abhay00991@gmail.com"
-                className="group mt-4 flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] py-4 text-lg font-bold text-white shadow-[0_4px_24px_rgba(122,63,145,0.3)] transition-all hover:shadow-[0_6px_32px_rgba(122,63,145,0.5)] hover:scale-[1.02]"
+                className="group mt-4 flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[var(--color-primary)] to-[#A855F7] py-3.5 text-base font-bold text-white shadow-[0_4px_24px_rgba(122,63,145,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_6px_32px_rgba(122,63,145,0.5)] sm:py-4 sm:text-lg"
               >
                 GET IN TOUCH
                 <ArrowUpRight className="transition-transform group-hover:rotate-45" />
@@ -157,9 +157,9 @@ const Footer = ({ standalone = false }) => {
           </motion.div>
         </div>
 
-        <div className="mt-10 flex w-full flex-col items-center justify-between gap-4 border-t border-white/20 pt-8 text-sm font-medium opacity-70 md:flex-row">
+        <div className="mt-8 flex w-full flex-col items-center justify-between gap-4 border-t border-white/20 pt-8 text-xs font-medium opacity-70 sm:text-sm md:mt-10 md:flex-row">
           <p>© {new Date().getFullYear()} Abhishek Mathur. Built as a personal portfolio.</p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap justify-center gap-5 sm:gap-6">
             <a href="mailto:abhay00991@gmail.com" className="transition-opacity hover:opacity-100">
               Email
             </a>

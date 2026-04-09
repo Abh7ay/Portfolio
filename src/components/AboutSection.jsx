@@ -40,10 +40,10 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
     <section
       id="about"
       ref={sectionRef}
-      className="mx-auto max-w-7xl border-t border-[var(--border-color)] px-4 py-24 sm:px-8 md:px-12"
+      className="mx-auto max-w-7xl border-t border-[var(--border-color)] px-4 py-20 sm:px-8 sm:py-24 md:px-12"
     >
-      <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.9fr)] lg:gap-20">
-        <div className="order-1 flex flex-col gap-14">
+      <div className="grid grid-cols-1 items-start gap-12 sm:gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.9fr)] lg:gap-20">
+        <div className="order-1 flex flex-col gap-10 sm:gap-14">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -55,13 +55,13 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
               <div className="mb-4 text-[11px] font-medium uppercase tracking-[0.3em] text-[var(--color-primary)]">
                 About Me
               </div>
-              <h2 className="mb-4 text-4xl md:text-5xl">
+              <h2 className="mb-4 text-3xl sm:text-4xl md:text-5xl">
                 Engineer Who Ships Scalable Systems & AI Solutions
               </h2>
               <p className="mb-6 max-w-3xl text-sm uppercase tracking-[0.24em] text-[var(--muted-text)] sm:text-base">
                 Clean architecture · Measurable performance · Code that lasts
               </p>
-              <div className="space-y-5 text-base leading-8 text-[var(--muted-text)] md:text-lg">
+              <div className="space-y-5 text-sm leading-7 text-[var(--muted-text)] sm:text-base sm:leading-8 md:text-lg">
                 {aboutParagraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -108,7 +108,7 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.06)]"
+            className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.06)] sm:p-8"
           >
             <div className="mb-6 flex items-center gap-3 text-[var(--color-primary)]">
               <BriefcaseBusiness size={18} />
@@ -119,7 +119,7 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <h3 className="text-3xl md:text-4xl">Machine Learning Intern</h3>
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl">Machine Learning Intern</h3>
                   <p className="mt-1 text-lg font-medium text-[var(--color-primary)]">
                     EiSystems
                   </p>
@@ -154,7 +154,7 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.18 }}
-            className="rounded-[2rem] border border-[var(--border-color)] bg-[linear-gradient(145deg,rgba(197,157,217,0.22),rgba(122,63,145,0.1))] p-8"
+            className="rounded-[2rem] border border-[var(--border-color)] bg-[linear-gradient(145deg,rgba(197,157,217,0.22),rgba(122,63,145,0.1))] p-6 sm:p-8"
           >
             <div className="mb-6 flex items-center gap-3 text-[var(--color-primary)]">
               <Rocket size={18} />
@@ -162,17 +162,17 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
                 Current Focus
               </span>
             </div>
-            <p className="max-w-4xl text-base leading-8 text-[var(--muted-text)] md:text-lg">
+            <p className="max-w-4xl text-sm leading-7 text-[var(--muted-text)] sm:text-base sm:leading-8 md:text-lg">
               Shipping scalable esports platforms and building real-time
               systems with modern frontend tooling and AI integrations.
             </p>
           </motion.div>
         </div>
 
-        <div className="order-2 flex flex-col gap-8 lg:pt-2">
+        <div className="order-2 flex flex-col gap-6 sm:gap-8 lg:pt-2">
           <div
             ref={slotRef}
-            className="relative w-full overflow-hidden rounded-[2rem] bg-transparent aspect-[4/5] lg:sticky lg:top-28"
+            className="relative mx-auto w-full max-w-[22rem] overflow-hidden rounded-[2rem] bg-transparent aspect-[4/5] lg:sticky lg:top-28 lg:max-w-none"
           >
             {dockedCard ? (
               <div className="absolute inset-0 flex items-center justify-center">
@@ -186,7 +186,7 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.08 }}
-            className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-8"
+            className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-6 sm:p-8"
           >
             <div className="mb-6 flex items-center gap-3 text-[var(--color-primary)]">
               <Award size={18} />
@@ -211,7 +211,7 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.14 }}
-            className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-8"
+            className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-6 sm:p-8"
           >
             <div className="mb-6 flex items-center gap-3 text-[var(--color-primary)]">
               <GraduationCap size={18} />
@@ -244,7 +244,7 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
               <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--muted-text)]">
                 Location
               </div>
-              <div className="mt-2 text-lg font-medium">Delhi, India</div>
+              <div className="mt-2 text-base font-medium sm:text-lg">Delhi, India</div>
             </div>
             <div className="rounded-[1.5rem] border border-[var(--border-color)] bg-[var(--card-bg)] p-5">
               <div className="text-[11px] uppercase tracking-[0.24em] text-[var(--muted-text)]">
@@ -252,7 +252,7 @@ const AboutSection = ({ sectionRef, slotRef, dockedCard }) => {
               </div>
               <a
                 href="mailto:abhay00991@gmail.com"
-                className="mt-2 block text-lg font-medium hover:text-[var(--color-primary)]"
+                className="mt-2 block text-base font-medium hover:text-[var(--color-primary)] sm:text-lg"
               >
                 abhay00991@gmail.com
               </a>

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { motion, useMotionTemplate, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import HeroSection from './HeroSection';
 import ServicesSection from './ServicesSection';
@@ -8,6 +8,10 @@ import ProfileShowcaseCard from './ProfileShowcaseCard';
 // One traveling card that docks into Services, then About.
 export default function HeroServicesAboutTrack() {
   const prefersReducedMotion = useReducedMotion();
+  const [enableFloatingCard, setEnableFloatingCard] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return window.matchMedia('(min-width: 1024px)').matches;
+  });
   const heroSectionRef = useRef(null);
   const servicesSectionRef = useRef(null);
   const aboutSectionRef = useRef(null);
@@ -44,7 +48,23 @@ export default function HeroServicesAboutTrack() {
     ? { stiffness: 240, damping: 34, mass: 0.3 }
     : { stiffness: 170, damping: 24, mass: 0.42 };
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+
+    function handleChange(event) {
+      setEnableFloatingCard(event.matches);
+    }
+
+    setEnableFloatingCard(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
   useLayoutEffect(() => {
+    if (!enableFloatingCard) {
+      return;
+    }
+
     if (
       !heroSectionRef.current ||
       !servicesSectionRef.current ||
@@ -167,7 +187,7 @@ export default function HeroServicesAboutTrack() {
       window.removeEventListener('resize', queueMeasure);
       window.removeEventListener('scroll', queueMeasure);
     };
-  }, []);
+  }, [enableFloatingCard]);
 
   const serviceTravelX = layout.slots.services.x * 0.68;
   const serviceTravelY = layout.slots.services.y * 0.72;
@@ -410,14 +430,14 @@ export default function HeroServicesAboutTrack() {
     [layout.stages.fadeStart, layout.stages.fadeEnd],
     [0, 1],
   );
-  const dockedCard = (
+  const dockedCard = enableFloatingCard ? (
     <motion.div
       style={{ opacity: dockedOpacity }}
       className="pointer-events-none absolute inset-0 flex items-center justify-center"
     >
       <ProfileShowcaseCard />
     </motion.div>
-  );
+  ) : null;
   const floatingCardStyles = {
     x: cardX,
     y: cardY,
@@ -433,7 +453,7 @@ export default function HeroServicesAboutTrack() {
     transformPerspective: 1800,
     transformStyle: 'preserve-3d',
   };
-  const heroCard = (
+  const heroCard = enableFloatingCard ? (
     <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center" style={{ paddingTop: '5rem', paddingLeft: '6rem' }}>
       <motion.div
         className="pointer-events-none"
@@ -445,30 +465,40 @@ export default function HeroServicesAboutTrack() {
         <ProfileShowcaseCard />
       </motion.div>
     </div>
-  );
+  ) : null;
 
   return (
     <div className="relative">
-      <HeroSection sectionRef={heroSectionRef} heroCard={heroCard} />
-      <ServicesSection sectionRef={servicesSectionRef} slotRef={servicesSlotRef} />
+      <HeroSection
+        sectionRef={heroSectionRef}
+        heroCard={heroCard}
+        centerCard={!enableFloatingCard ? <ProfileShowcaseCard /> : null}
+      />
+      <ServicesSection
+        sectionRef={servicesSectionRef}
+        slotRef={servicesSlotRef}
+        slotContent={!enableFloatingCard ? <ProfileShowcaseCard /> : null}
+      />
       <AboutSection sectionRef={aboutSectionRef} slotRef={aboutSlotRef} dockedCard={dockedCard} />
 
-      <div
-        className={[
-          'pointer-events-none fixed inset-0 z-30 flex items-center justify-center transition-opacity duration-300',
-          isMeasured ? 'opacity-100' : 'opacity-0',
-        ].join(' ')}
-      >
-        <motion.div
-          className="pointer-events-none"
-          style={{
-            opacity: sectionFloatingOpacity,
-            ...floatingCardStyles,
-          }}
+      {enableFloatingCard && (
+        <div
+          className={[
+            'pointer-events-none fixed inset-0 z-30 flex items-center justify-center transition-opacity duration-300',
+            isMeasured ? 'opacity-100' : 'opacity-0',
+          ].join(' ')}
         >
-          <ProfileShowcaseCard />
-        </motion.div>
-      </div>
+          <motion.div
+            className="pointer-events-none"
+            style={{
+              opacity: sectionFloatingOpacity,
+              ...floatingCardStyles,
+            }}
+          >
+            <ProfileShowcaseCard />
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }

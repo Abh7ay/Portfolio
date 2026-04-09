@@ -115,7 +115,7 @@ const ProjectsSection = () => {
   return (
     <section
       id="projects"
-      className="mx-auto max-w-7xl border-t border-[var(--border-color)] px-4 py-28 sm:px-8 md:px-12"
+      className="mx-auto max-w-7xl border-t border-[var(--border-color)] px-4 py-20 sm:px-8 sm:py-28 md:px-12"
     >
       {/* ── Section header ── */}
       <motion.div
@@ -123,13 +123,13 @@ const ProjectsSection = () => {
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeSlide}
-        className="mb-20"
+        className="mb-14 sm:mb-20"
       >
         <div className="mb-4 text-[11px] font-medium uppercase tracking-[0.3em] text-[var(--color-primary)]">
           Selected Work
         </div>
-        <h2 className="mb-5 text-4xl md:text-5xl">Projects I Work On</h2>
-        <p className="max-w-2xl text-base leading-8 text-[var(--muted-text)] md:text-lg">
+        <h2 className="mb-5 text-3xl sm:text-4xl md:text-5xl">Projects I Work On</h2>
+        <p className="max-w-2xl text-sm leading-7 text-[var(--muted-text)] sm:text-base sm:leading-8 md:text-lg">
           A selection of projects focused on performance, scalability, and
           real-world problem solving. Each one represents a genuine engineering
           challenge — not just UI.
@@ -137,7 +137,7 @@ const ProjectsSection = () => {
       </motion.div>
 
       {/* ── Case studies — alternating layout ── */}
-      <div className="space-y-24">
+      <div className="space-y-16 sm:space-y-24">
         {caseStudies.map((project, index) => {
           const isReversed = index % 2 !== 0;
           return (
@@ -150,7 +150,7 @@ const ProjectsSection = () => {
               className="group"
             >
               <div
-                className={`grid items-center gap-12 lg:grid-cols-2 lg:gap-16 ${
+                className={`grid items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16 ${
                   isReversed ? 'lg:[direction:rtl]' : ''
                 }`}
               >
@@ -164,20 +164,20 @@ const ProjectsSection = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                     {/* Number overlay */}
-                    <div className="absolute left-6 bottom-6 font-antonio text-7xl leading-none text-white/15 md:text-8xl">
+                    <div className="absolute bottom-4 left-4 font-antonio text-6xl leading-none text-white/15 sm:bottom-6 sm:left-6 sm:text-7xl md:text-8xl">
                       {project.number}
                     </div>
                   </div>
                 </div>
 
                 {/* ── Content side ── */}
-                <div className={`flex flex-col gap-6 ${isReversed ? 'lg:[direction:ltr]' : ''}`}>
+                <div className={`flex flex-col gap-5 sm:gap-6 ${isReversed ? 'lg:[direction:ltr]' : ''}`}>
                   {/* Header */}
                   <div>
                     <div className="mb-3 inline-block rounded-full border border-[var(--border-color)] bg-[var(--glass-bg)] px-4 py-1.5 text-[10px] font-medium uppercase tracking-[0.26em] text-[var(--color-primary)] backdrop-blur-sm">
                       {project.label}
                     </div>
-                    <h3 className="text-3xl md:text-4xl">{project.title}</h3>
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl">{project.title}</h3>
                   </div>
 
                   {/* Problem */}
@@ -185,7 +185,7 @@ const ProjectsSection = () => {
                     <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.24em] text-[var(--color-primary)]">
                       Problem
                     </div>
-                    <p className="text-base leading-8 text-[var(--muted-text)]">
+                    <p className="text-sm leading-7 text-[var(--muted-text)] sm:text-base sm:leading-8">
                       {project.problem}
                     </p>
                   </div>
@@ -195,7 +195,7 @@ const ProjectsSection = () => {
                     <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.24em] text-[var(--color-primary)]">
                       Solution
                     </div>
-                    <p className="text-base leading-8 text-[var(--muted-text)]">
+                    <p className="text-sm leading-7 text-[var(--muted-text)] sm:text-base sm:leading-8">
                       {project.solution}
                     </p>
                   </div>
@@ -219,13 +219,13 @@ const ProjectsSection = () => {
                   </div>
 
                   {/* Impact metrics */}
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                     {project.impact.map((m) => (
                       <div
                         key={m.label}
                         className="rounded-[1.1rem] border border-[var(--border-color)] bg-[var(--glass-bg)] p-3.5 text-center backdrop-blur-sm"
                       >
-                        <div className="text-xl font-antonio text-[var(--color-primary)] md:text-2xl">
+                        <div className="text-lg font-antonio text-[var(--color-primary)] sm:text-xl md:text-2xl">
                           {m.value}
                         </div>
                         <div className="mt-1 text-[10px] uppercase tracking-[0.18em] text-[var(--muted-text)]">
@@ -277,7 +277,7 @@ const ProjectsSection = () => {
 
               {/* Divider between projects */}
               {index < caseStudies.length - 1 && (
-                <div className="mx-auto mt-24 h-px w-24 bg-[var(--border-color)]" />
+                <div className="mx-auto mt-16 h-px w-24 bg-[var(--border-color)] sm:mt-24" />
               )}
             </motion.div>
           );
@@ -290,13 +290,13 @@ const ProjectsSection = () => {
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeSlide}
-        className="mt-24 flex justify-center"
+        className="mt-16 flex justify-center sm:mt-24"
       >
         <a
           href="https://github.com/Abh7ay?tab=repositories"
           target="_blank"
           rel="noreferrer"
-          className="group inline-flex items-center gap-3 rounded-full border border-[var(--border-color)] px-8 py-3.5 text-sm font-medium transition-all hover:bg-[var(--text-color)] hover:text-[var(--bg-color)]"
+          className="group inline-flex items-center gap-3 rounded-full border border-[var(--border-color)] px-6 py-3 text-sm font-medium transition-all hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] sm:px-8 sm:py-3.5"
         >
           View All on GitHub
           <ArrowUpRight size={16} className="transition-transform group-hover:rotate-45" />
